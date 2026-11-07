@@ -52,6 +52,10 @@ main{max-width:1100px;margin:auto;padding:8px 16px 24px;display:grid;gap:14px;gr
 #sheet h4{margin:14px 0 4px;font-size:13px;color:var(--mute);font-weight:600}
 #sheet pre{white-space:pre-wrap;background:var(--floor);padding:10px;border-radius:10px;font:13px/1.45 ui-monospace,monospace;margin:0}
 #sheet .x{float:right;background:var(--floor);color:var(--ink)}
+#brain{width:100%;max-width:460px;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+#sheet textarea{width:100%;min-height:70px;font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--floor);color:var(--ink)}
+#ask{background:#6c4cf5;color:#fff;margin-top:8px}
+#reply{white-space:pre-wrap;margin-top:10px;background:var(--floor);padding:10px;border-radius:10px;font-size:14px;display:none}
 </style>
 </head>
 <body>
@@ -59,6 +63,7 @@ main{max-width:1100px;margin:auto;padding:8px 16px 24px;display:grid;gap:14px;gr
 <h1>🎬 AI Studio Office</h1>
 <p>14 AI employees, 7 departments. Tap any desk to see the job description and prompt. Press Run to watch one episode move through the studio.</p>
 <div class="bar"><button id="run">▶ Run an episode</button><button class="ghost" id="reset">Reset</button><span id="stat">All desks idle</span></div>
+<div class="bar" style="margin-top:10px"><input id="brain" type="url" placeholder="Paste your studio-brain link (https://…workers.dev)" aria-label="Studio brain link"></div>
 </header>
 <main id="office"></main>
 <section id="log"><div id="logbox"><p>Activity log will appear here.</p></div></section>
@@ -105,11 +110,29 @@ DEPTS.forEach(function(d){
  });
  office.appendChild(room);
 });
+var KEYS=['','manager','project','writer','character','storyboard','director','animator','background','sound','editor','qc','marketing','publisher','analytics'];
+var brain=document.getElementById('brain');
+try{brain.value=localStorage.getItem('brainUrl')||''}catch(e){}
+brain.onchange=function(){try{localStorage.setItem('brainUrl',brain.value.trim())}catch(e){}};
 function open(a){
- sheet.innerHTML='<button class="x" aria-label="Close">Close</button><h3>'+a.e+' '+a.who+' · '+a.r+'</h3><p style="color:var(--mute);margin:2px 0">'+a.dept+' department</p><h4>Hands off</h4><div>'+a.out+'</div><h4>Free tool</h4><div>'+a.free+'</div><h4>Agent prompt (copy into your Worker)</h4><pre></pre>';
+ sheet.innerHTML='<button class="x" aria-label="Close">Close</button><h3>'+a.e+' '+a.who+' · '+a.r+'</h3><p style="color:var(--mute);margin:2px 0">'+a.dept+' department</p><h4>Give '+a.who+' a task</h4><textarea id="task" placeholder="Example: Plan a 2-minute episode about a shy robot who learns to dance"></textarea><button id="ask">Ask '+a.who+'</button><div id="reply"></div><h4>Hands off</h4><div>'+a.out+'</div><h4>Free tool</h4><div>'+a.free+'</div><h4>Agent prompt</h4><pre></pre>';
  sheet.querySelector('pre').textContent=a.p;
  sheet.querySelector('.x').onclick=function(){sheet.classList.remove('open')};
+ document.getElementById('ask').onclick=function(){ask(a)};
  sheet.classList.add('open');
+}
+async function ask(a){
+ var url=brain.value.trim(),box=document.getElementById('reply'),t=document.getElementById('task').value.trim();
+ box.style.display='block';
+ if(!url){box.textContent='Paste your studio-brain link at the top of the page first, then try again.';return}
+ if(!t){box.textContent='Type a task first.';return}
+ box.textContent=a.who+' is thinking…';els[a.id].classList.add('work');els[a.id].querySelector('.bub').textContent=a.msg;
+ try{
+  var r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent:KEYS[a.id],task:t})});
+  var d=await r.json();
+  box.textContent=d.reply||('Error: '+(d.error||'no reply'));
+ }catch(e){box.textContent='Could not reach the brain. Check the link and try again.'}
+ els[a.id].classList.remove('work');els[a.id].classList.add('done');
 }
 function say(t,w){var p=document.createElement('p');p.innerHTML='<b>'+w+':</b> '+t;if(logbox.querySelector('p')&&logbox.children.length===1&&logbox.textContent.indexOf('Activity log')===0)logbox.innerHTML='';logbox.appendChild(p);logbox.scrollTop=logbox.scrollHeight}
 function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
