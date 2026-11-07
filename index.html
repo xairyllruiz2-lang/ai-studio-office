@@ -3,155 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI Studio Office</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<title>LUNARAG Studios</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f3f1fa;--floor:#e6e2f4;--card:#fff;--ink:#1d1a33;--mute:#6a6585;--line:#d6d0ea;--shadow:rgba(40,30,90,.12)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12112a;--floor:#1a1938;--card:#242250;--ink:#f1eeff;--mute:#a49fc9;--line:#38356b;--shadow:rgba(0,0,0,.4)}}
-:root[data-theme=dark]{--bg:#12112a;--floor:#1a1938;--card:#242250;--ink:#f1eeff;--mute:#a49fc9;--line:#38356b;--shadow:rgba(0,0,0,.4)}
-*{box-sizing:border-box}
+:root{--bg:#0a1020;--panel:#131c33;--line:#26334f;--ink:#eaf0ff;--mute:#93a3c4;--ok:#35d49a;--warn:#f5b942;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.45}
-header{padding:20px 16px 8px;max-width:1100px;margin:auto}
-h1{font-size:clamp(26px,6vw,40px);margin:0;font-weight:800;letter-spacing:-.02em}
-header p{margin:4px 0 14px;color:var(--mute);max-width:60ch}
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 16px;font-weight:600}
-#run{background:#6c4cf5;color:#fff}
-#run:disabled{opacity:.6}
-.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
-button:focus-visible{outline:3px solid #f5a524;outline-offset:2px}
-#stat{color:var(--mute);font-size:14px}
-main{max-width:1100px;margin:auto;padding:8px 16px 24px;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
-.room{background:var(--floor);border:2px solid var(--c);border-radius:18px;padding:12px;position:relative;box-shadow:0 6px 18px var(--shadow)}
-.room h2{margin:0 0 10px;font-size:16px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
-.room h2 i{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block}
-.desks{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.desk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px 8px;text-align:center;width:100%;color:var(--ink);position:relative;transition:transform .15s,border-color .15s}
-.desk:hover{transform:translateY(-3px);border-color:var(--c)}
-.av{width:52px;height:52px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:26px;background:color-mix(in srgb,var(--c) 22%,var(--card));border:2px solid var(--c)}
-.desk b{display:block;font-size:13px;line-height:1.2}
-.desk small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
-.dot{position:absolute;top:8px;right:8px;width:10px;height:10px;border-radius:50%;background:#9a96b8}
-.desk.work .dot{background:#f5a524;animation:p 0.8s infinite}
-.desk.work{border-color:#f5a524;transform:translateY(-3px)}
-.desk.done .dot{background:#2fbf71}
-.bub{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);background:#f5a524;color:#1d1a33;font-size:11px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap;z-index:3;display:none;max-width:200px;overflow:hidden;text-overflow:ellipsis}
-.desk.work .bub{display:block}
-@keyframes p{50%{opacity:.3}}
-@media (prefers-reduced-motion:reduce){.dot{animation:none!important}.desk{transition:none}}
-#log{max-width:1100px;margin:0 auto;padding:0 16px 30px}
-#log div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;max-height:200px;overflow:auto}
-#log p{margin:2px 0;color:var(--mute)}
-#log p b{color:var(--ink)}
-#sheet{position:fixed;inset:auto 0 0 0;background:var(--card);color:var(--ink);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px var(--shadow);transform:translateY(105%);transition:transform .25s;max-height:78vh;overflow:auto;z-index:10;max-width:720px;margin:auto;border:1px solid var(--line)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font:400 15px/1.45 "Space Grotesk",system-ui,sans-serif;
+background:radial-gradient(1px 1px at 12% 20%,#fff8,transparent),radial-gradient(1px 1px at 70% 12%,#fff6,transparent),radial-gradient(1.5px 1.5px at 88% 70%,#fff7,transparent),radial-gradient(1px 1px at 30% 85%,#fff6,transparent),radial-gradient(120% 90% at 50% 40%,#16244a,var(--bg));padding-bottom:56vh}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 16px;max-width:1000px;margin:0 auto}
+h1{font-size:20px;margin:0}
+.tabs{display:flex;gap:4px;background:#0c1426;border:1px solid var(--line);border-radius:12px;padding:4px}
+.tabs button{all:unset;cursor:pointer;padding:6px 16px;border-radius:9px;font-weight:700;color:var(--mute)}
+.tabs button[aria-selected="true"]{background:#24345c;color:var(--ink)}
+button:focus-visible,[tabindex]:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.pill{font:500 12px "JetBrains Mono",monospace;background:#0f2a2a;border:1px solid #1d6b57;color:var(--ok);padding:6px 12px;border-radius:999px}
+.scroll{overflow-x:auto;max-width:1000px;margin:0 auto;touch-action:pan-x pan-y}
+.zm{display:flex;gap:6px;justify-content:flex-end;align-items:center;max-width:1000px;margin:0 auto;padding:0 16px 6px}
+.zm button{all:unset;cursor:pointer;min-width:40px;height:40px;text-align:center;line-height:40px;border-radius:12px;background:#24345c;color:var(--ink);font-weight:700;font-size:20px;padding:0 6px}
+.zm #zr{font-size:13px;min-width:56px}
+svg{display:block;min-width:820px;width:100%;height:auto}
+.room,.hub{cursor:pointer}
+.room:hover .plat,.hub:hover .plat{filter:brightness(1.18)}
+.bob{animation:bob 1.1s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-1.6px)}}
+.ring{animation:ring 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ring{50%{transform:scale(1.08);opacity:.5}}
+@media (prefers-reduced-motion:reduce){.bob,.ring{animation:none}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 16px;max-width:1000px;margin:0 auto}
+.chips button{all:unset;cursor:pointer;flex:none;padding:6px 12px;border-radius:999px;border:1.5px solid var(--c);font-size:13px;font-weight:700}
+#tasks{display:none;max-width:760px;margin:8px auto;padding:0 16px}
+.t{display:flex;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.t b{display:block}.t small{color:var(--mute)}
+.pg{height:5px;background:#0c1426;border-radius:9px;margin-top:6px;overflow:hidden}.pg i{display:block;height:100%;background:var(--c)}
+.t .go{margin-left:auto;all:unset;cursor:pointer;background:var(--warn);color:#201400;font-weight:700;padding:8px 14px;border-radius:10px;flex:none}
+.need{border-color:var(--warn)}
+#sheet{position:fixed;left:0;right:0;bottom:0;max-height:64vh;overflow-y:auto;background:var(--panel);border-top:3px solid var(--c,#22d3ee);border-radius:22px 22px 0 0;box-shadow:0 -12px 40px #000a;transform:translateY(105%);transition:transform .25s;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));z-index:5}
 #sheet.open{transform:none}
-#sheet h3{margin:0;font-size:20px}
-#sheet h4{margin:14px 0 4px;font-size:13px;color:var(--mute);font-weight:600}
-#sheet pre{white-space:pre-wrap;background:var(--floor);padding:10px;border-radius:10px;font:13px/1.45 ui-monospace,monospace;margin:0}
-#sheet .x{float:right;background:var(--floor);color:var(--ink)}
-#brain{width:100%;max-width:460px;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-#sheet textarea{width:100%;min-height:70px;font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--floor);color:var(--ink)}
-#ask{background:#6c4cf5;color:#fff;margin-top:8px}
-#reply{white-space:pre-wrap;margin-top:10px;background:var(--floor);padding:10px;border-radius:10px;font-size:14px;display:none}
+.in{max-width:760px;margin:0 auto}
+.hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.hd h2{margin:0;font-size:21px}.hd span{color:var(--mute);font-size:13px}
+#x{all:unset;cursor:pointer;margin-left:auto;font-size:22px;padding:4px 10px}
+details{background:#0e1730;border:1px solid var(--line);border-radius:14px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px}
+summary::-webkit-details-marker{display:none}
+.av{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--c)}
+summary b{display:block;line-height:1.2}summary small{color:var(--mute);display:block;line-height:1.3}
+.st{margin-left:auto;flex:none;font:500 11px "JetBrains Mono",monospace;padding:3px 8px;border-radius:99px;background:#0f2a2a;color:var(--ok)}
+.st.i{background:#33270b;color:var(--warn)}
+.bd{padding:0 12px 12px;font-size:14px}
+.bd p{margin:4px 0}
+.bd em{font-style:normal;color:var(--mute)}
+pre{white-space:pre-wrap;background:#0a1124;border-radius:10px;padding:10px;font:13px/1.5 "Space Grotesk",sans-serif;margin:8px 0}
+.lv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.lv div{background:#0e1730;border:1px solid var(--line);border-radius:12px;padding:8px;font-size:12.5px;color:var(--mute)}.lv b{display:block;color:var(--ink);font-size:14px}.cp{all:unset;cursor:pointer;background:var(--ink);color:#0a1020;font-weight:700;padding:7px 14px;border-radius:10px}
+#brain{width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#0c1426;color:var(--ink)}
+.tk{width:100%;min-height:64px;margin:10px 0 6px;background:#0a1124;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;font:inherit}
+.rp{white-space:pre-wrap;margin-top:8px;background:#0a1124;border-radius:10px;padding:10px;display:none;font-size:14px}
+.ak{background:#d9a441!important;margin-left:8px}
 </style>
 </head>
 <body>
-<header>
-<h1>🎬 AI Studio Office</h1>
-<p>14 AI employees, 7 departments. Tap any desk to see the job description and prompt. Press Run to watch one episode move through the studio.</p>
-<div class="bar"><button id="run">▶ Run an episode</button><button class="ghost" id="reset">Reset</button><span id="stat">All desks idle</span></div>
-<div class="bar" style="margin-top:10px"><input id="brain" type="url" placeholder="Paste your studio-brain link (https://…workers.dev)" aria-label="Studio brain link"></div>
-</header>
-<main id="office"></main>
-<section id="log"><div id="logbox"><p>Activity log will appear here.</p></div></section>
-<aside id="sheet" role="dialog" aria-label="Employee details"></aside>
+<div class="bar"><h1>🌙 LUNARAG Studios<small style="display:block;font-size:12px;font-weight:500;color:#e8c36a">The Legends of the Philippines Awaken.</small></h1>
+<div class="tabs" role="tablist"><button role="tab" aria-selected="true" id="tO">Office</button><button role="tab" aria-selected="false" id="tT">Tasks</button></div>
+<span class="pill" id="cnt"></span></div>
+<div style="max-width:1000px;margin:0 auto;padding:0 16px 8px"><input id="brain" type="url" placeholder="Paste your studio-brain link (https://…workers.dev)" aria-label="Studio brain link"></div>
+<div id="officeV"><div class="zm"><button id="zo" aria-label="Zoom out">−</button><button id="zr" aria-label="Reset zoom">100%</button><button id="zi" aria-label="Zoom in">+</button></div><div class="scroll"><svg id="map" viewBox="0 0 1000 700" role="group" aria-label="Studio office floor plan"></svg></div>
+<div class="chips" id="chips"></div></div>
+<div id="tasks"></div>
+<div id="sheet" role="dialog" aria-label="Department details"><div class="in" id="in"></div></div>
 <script>
-// ---------- EDIT THIS LIST to change your team ----------
-// free = the free tool this employee uses. out = what they hand to the next person.
-var DEPTS=[
-{n:"Management",c:"#6c4cf5",a:[
- {id:1,e:"🧠",r:"Studio Manager (Main AI)",who:"Mayari",msg:"Reading the brief…",out:"Episode plan + task list",free:"Cloudflare Worker + Workers AI (free tier). Receives your request, creates GitHub Issues for each task.",p:"You are the Studio Manager of an AI animation studio. Turn the owner's idea into a clear episode brief, split it into tasks, assign each task to the right employee, and report status back to the owner. Never do specialist work yourself; delegate."},
- {id:2,e:"📋",r:"Project Manager",who:"Tala",msg:"Setting deadlines…",out:"Schedule + task board",free:"GitHub Projects (free) board. Moves issues between To do / Doing / Review / Done.",p:"You are the Project Manager. Track every task on the board, set deadlines, flag blockers, and ping the Studio Manager when something is late. Keep a one-line status per task."}]},
-{n:"Creative",c:"#e8497a",a:[
- {id:3,e:"✍️",r:"Story Writer",who:"Dalisay",msg:"Writing the script…",out:"Script + scene list",free:"Workers AI text model (Llama) via a Worker endpoint. Saves script.md in the repo.",p:"You are the Story Writer for a kids-friendly animated series. Write a short, clear script with scenes, dialogue and a simple moral. Output markdown: Title, Logline, Scenes (1..n) with action and dialogue."},
- {id:4,e:"🎨",r:"Character Designer",who:"Hiraya",msg:"Sketching characters…",out:"Character sheets",free:"Workers AI image model (Stable Diffusion) for concepts. Stores prompts in characters.json for consistency.",p:"You are the Character Designer. For each character, write a locked visual description (age, shape, colors, outfit, face, style) reusable as an image prompt. Keep the same description every episode."},
- {id:5,e:"🖼️",r:"Storyboard Artist",who:"Likha",msg:"Drawing panels…",out:"Shot list + panels",free:"Workers AI image model for panels. Saves storyboard.md with one prompt per shot.",p:"You are the Storyboard Artist. Break each scene into shots with camera angle, framing, action and an image prompt that reuses the character descriptions exactly."}]},
-{n:"Animation",c:"#ff8a3d",a:[
- {id:6,e:"🎥",r:"Animation Director",who:"Lakan",msg:"Planning motion…",out:"Animation notes",free:"Text model. Writes motion notes per shot (timing, movement, expression).",p:"You are the Animation Director. For each shot, define duration, movement, expressions and transitions. Keep the style consistent across the whole episode."},
- {id:7,e:"🤖",r:"AI Animator",who:"Bagani",msg:"Animating shots…",out:"Animated clips",free:"Free image-to-video tools (e.g. open-source models on Hugging Face Spaces) or Cloudflare image frames stitched with ffmpeg in GitHub Actions.",p:"You are the AI Animator. Turn each storyboard panel plus motion note into a short clip. Report which shots are done and which failed, with the prompt used."},
- {id:8,e:"🏞️",r:"Background Artist",who:"Ilaya",msg:"Painting backgrounds…",out:"Background plates",free:"Workers AI image model. Saves backgrounds to Cloudflare R2 free tier (10 GB).",p:"You are the Background Artist. Create a consistent set of background prompts per location (day, night, mood, palette) and keep them in the same art style."}]},
-{n:"Audio & Post",c:"#1fa6a6",a:[
- {id:9,e:"🎧",r:"Voice & Sound Designer",who:"Himig",msg:"Recording voices…",out:"Voice + music tracks",free:"Free TTS (Workers AI text-to-speech or open-source Piper TTS) and royalty-free music.",p:"You are the Voice & Sound Designer. Assign a voice to each character, generate dialogue audio line by line, and list sound effects and music cues with timestamps."},
- {id:10,e:"✂️",r:"Video Editor",who:"Habi",msg:"Cutting the episode…",out:"Final cut",free:"ffmpeg inside GitHub Actions (free minutes). Joins clips, audio and subtitles into episode.mp4.",p:"You are the Video Editor. Assemble clips, voice, music and subtitles in script order. Output an edit list (EDL) and the ffmpeg commands to render the final cut."}]},
-{n:"Quality Control",c:"#3f8f3f",a:[
- {id:11,e:"🔍",r:"Quality Control Supervisor",who:"Bantay",msg:"Checking quality…",out:"Approve / fix list",free:"Text model with a checklist: story, character consistency, audio sync, safety. Opens GitHub Issues for fixes.",p:"You are the QC Supervisor. Review the final cut against the checklist: plot clarity, character consistency, audio sync, subtitles, kid-safety. Return APPROVED or a numbered fix list with the responsible employee."}]},
-{n:"Publishing & Marketing",c:"#d4a017",a:[
- {id:12,e:"📣",r:"Publishing & Marketing Manager",who:"Sinag",msg:"Planning the launch…",out:"Titles, tags, schedule",free:"Text model. Writes title, description, hashtags, thumbnail prompt and a posting calendar.",p:"You are the Publishing & Marketing Manager. Write a catchy title, description, tags and a release schedule for each platform. Request a thumbnail from the Background Artist."},
- {id:13,e:"📱",r:"Social Media Publisher",who:"Hatid",msg:"Posting everywhere…",out:"Live posts",free:"GitHub Actions cron + free platform APIs (YouTube Data API, etc.). Posts at the scheduled time.",p:"You are the Social Media Publisher. Post the approved video and caption to each platform on schedule, then return the live links and any errors."}]},
-{n:"Analytics & Growth",c:"#4a7bd8",a:[
- {id:14,e:"📈",r:"Analytics & Growth Specialist",who:"Tanaw",msg:"Reading the numbers…",out:"Weekly growth report",free:"Cloudflare Web Analytics (free) + platform stats. Writes a weekly report.md and ideas for the next episode.",p:"You are the Analytics & Growth Specialist. Summarize views, watch time and audience feedback, find what worked, and suggest three ideas for the next episode. Send them to the Studio Manager."}]}
-];
-// ---------- app ----------
-var office=document.getElementById('office'),logbox=document.getElementById('logbox'),sheet=document.getElementById('sheet'),stat=document.getElementById('stat'),runBtn=document.getElementById('run');
-var all=[],els={},running=false;
-DEPTS.forEach(function(d){
- var room=document.createElement('section');room.className='room';room.style.setProperty('--c',d.c);
- room.innerHTML='<h2><i></i>'+d.n+'</h2><div class="desks"></div>';
- var wrap=room.querySelector('.desks');
- d.a.forEach(function(a){
-  a.dept=d.n;all.push(a);
-  var b=document.createElement('button');b.className='desk';b.style.setProperty('--c',d.c);
-  b.innerHTML='<span class="bub"></span><span class="dot"></span><div class="av">'+a.e+'</div><b>'+a.who+'</b><small>'+a.r+'</small>';
-  b.onclick=function(){open(a)};
-  wrap.appendChild(b);els[a.id]=b;
- });
- office.appendChild(room);
-});
-var KEYS=['','manager','project','writer','character','storyboard','director','animator','background','sound','editor','qc','marketing','publisher','analytics'];
-var brain=document.getElementById('brain');
-try{brain.value=localStorage.getItem('brainUrl')||''}catch(e){}
-brain.onchange=function(){try{localStorage.setItem('brainUrl',brain.value.trim())}catch(e){}};
-function open(a){
- sheet.innerHTML='<button class="x" aria-label="Close">Close</button><h3>'+a.e+' '+a.who+' · '+a.r+'</h3><p style="color:var(--mute);margin:2px 0">'+a.dept+' department</p><h4>Give '+a.who+' a task</h4><textarea id="task" placeholder="Example: Plan a 2-minute episode about a shy robot who learns to dance"></textarea><button id="ask">Ask '+a.who+'</button><div id="reply"></div><h4>Hands off</h4><div>'+a.out+'</div><h4>Free tool</h4><div>'+a.free+'</div><h4>Agent prompt</h4><pre></pre>';
- sheet.querySelector('pre').textContent=a.p;
- sheet.querySelector('.x').onclick=function(){sheet.classList.remove('open')};
- document.getElementById('ask').onclick=function(){ask(a)};
- sheet.classList.add('open');
-}
-async function ask(a){
- var url=brain.value.trim(),box=document.getElementById('reply'),t=document.getElementById('task').value.trim();
- box.style.display='block';
- if(!url){box.textContent='Paste your studio-brain link at the top of the page first, then try again.';return}
- if(!t){box.textContent='Type a task first.';return}
- box.textContent=a.who+' is thinking…';els[a.id].classList.add('work');els[a.id].querySelector('.bub').textContent=a.msg;
- try{
-  var r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent:KEYS[a.id],task:t})});
-  var d=await r.json();
-  box.textContent=d.reply||('Error: '+(d.error||'no reply'));
- }catch(e){box.textContent='Could not reach the brain. Check the link and try again.'}
- els[a.id].classList.remove('work');els[a.id].classList.add('done');
-}
-function say(t,w){var p=document.createElement('p');p.innerHTML='<b>'+w+':</b> '+t;if(logbox.querySelector('p')&&logbox.children.length===1&&logbox.textContent.indexOf('Activity log')===0)logbox.innerHTML='';logbox.appendChild(p);logbox.scrollTop=logbox.scrollHeight}
-function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
-function reset(){all.forEach(function(a){els[a.id].className='desk';els[a.id].querySelector('.bub').textContent=''});stat.textContent='All desks idle';logbox.innerHTML='<p>Activity log will appear here.</p>'}
-async function run(){
- if(running)return;running=true;runBtn.disabled=true;reset();
- var prev=null;
- for(var i=0;i<all.length;i++){
-  var a=all[i],el=els[a.id];
-  el.classList.add('work');el.querySelector('.bub').textContent=a.msg;
-  stat.textContent=(i+1)+' of '+all.length+' · '+a.who+' is working';
-  if(prev)say('handed over "'+prev.out+'" to '+a.who,prev.who);
-  await wait(750);
-  el.classList.remove('work');el.classList.add('done');prev=a;
- }
- say('episode published. Report sent back to the Studio Manager.',prev.who);
- stat.textContent='Episode complete ✔';running=false;runBtn.disabled=false;
-}
-runBtn.onclick=run;document.getElementById('reset').onclick=function(){if(!running)reset()};
+const M={n:"Management",c:"#22d3ee",a:[
+["01","Studio Manager","Main AI Agent","👑","Takes your idea, splits it into tasks, assigns every agent and reports back to you.","You","All department heads","You are the Studio Manager, main AI agent of an animation studio. Turn the owner’s idea into a clear brief, assign work to each department in order, track progress, resolve conflicts and report in short summaries. Never publish without QC approval.","Splitting Episode 1 brief into tasks",70,1],
+["02","Project Manager","","📋","Builds the schedule, tracks every task and flags delays early.","Studio Manager","All agents","You are the Project Manager. Break each project into tasks with owners and deadlines, keep a live status board, chase blockers and send the Studio Manager a daily update.","Updating schedule, flagging delays",45,1]]};
+const R=[
+{n:"Creative",c:"#7a5cf0",a:[
+["03","Story Writer","","✍️","Writes premise, script, dialogue and scene list.","Studio Manager","Character Designer, Storyboard","You are the Story Writer. Create an original story with a hook, clear arc and short scenes. Output a scene list plus script suited to the audience and video length.","Writing scene 4 dialogue",60,1],
+["04","Character Designer","","🎨","Defines how each character looks, moves and sounds.","Story Writer","Storyboard, AI Animator","You are the Character Designer. For each character write a visual spec (shapes, colors, outfit, expressions) and consistent image prompts so they look identical in every shot.","Locking main character sheet",80,1],
+["05","Storyboard Artist","","🎬","Turns the script into shot-by-shot panels with camera and timing.","Story Writer, Character Designer","Animation Director","You are the Storyboard Artist. Convert each scene into numbered shots with camera angle, action, duration and a visual prompt. Keep continuity.","Panels for scenes 1–3",35,1]]},
+{n:"Animation",c:"#3d7bf0",a:[
+["06","Animation Director","","🎥","Picks a level for each shot (Beginner, Intermediate or Pro), sets the timing and reviews the drawings.","Storyboard Artist","AI Animator, Background Artist","You are the Animation Director of a hand-drawn 2D studio. For each shot choose a level: Beginner (rough line loop, 4-6 frames), Intermediate (flat color shapes, 8-12 frames) or Pro (full scene with lighting, glow and background). Set timing, assign drawings and review against the storyboard.","Choosing level for shot 7",50,1],
+["07","AI Animator","","✨","Plans every frame of a moving loop and gives you a drawing list: key poses first, then in-betweens.","Animation Director","Video Editor, QC","You are the AI Animator. For each shot write a frame-by-frame plan: key poses, in-betweens, 12 frames per second and a simple loop. Break any effect (like fire) into 4-6 drawings. Explain each step so a beginner can draw it.","Planning a 6-frame fire loop",25,1],
+["08","Background Artist","","🏞️","Paints the worlds and sets the characters move through.","Animation Director","AI Animator","You are the Background Artist. Plan consistent backgrounds and props per location with matching palette, lighting and perspective, and give a simple step-by-step drawing guide for each.","Painting forest at dusk",65,1]]},
+{n:"Audio & Post",c:"#2fb36d",a:[
+["09","Voice & Sound Designer","","🎧","Voices, music and sound effects.","Story Writer, Animation Director","Video Editor","You are the Voice & Sound Designer. Assign a voice to each character, generate dialogue audio, pick music and list sound effects with timestamps.","Recording character voices",55,1],
+["10","Video Editor","","✂️","Assembles clips, audio, captions and titles into the final cut.","AI Animator, Voice & Sound","Quality Control","You are the Video Editor. Assemble shots in order, sync audio, add captions and transitions, and export in the required formats.","Rough cut v2",40,1]]},
+{n:"Quality Control",c:"#f08a2e",a:[
+["11","Quality Control Supervisor","","🔍","Checks story, visuals, audio and safety before anything ships.","Video Editor","Studio Manager","You are the Quality Control Supervisor. Review every cut against the brief: character consistency, glitches, audio sync, spelling, age-appropriateness. Return a pass/fail checklist with timestamps.","Waiting for final cut",0,0]]},
+{n:"Publishing & Marketing",c:"#d45bd6",a:[
+["12","Publishing & Marketing Manager","","📣","Plans titles, thumbnails, descriptions and the release calendar.","Studio Manager","Social Media Publisher","You are the Publishing & Marketing Manager. Write titles, descriptions, tags and thumbnail concepts, and plan the release schedule per platform.","Drafting 3 title options",70,1],
+["13","Social Media Publisher","","📱","Uploads and posts on every platform on schedule.","Publishing & Marketing Manager","Analytics Specialist","You are the Social Media Publisher. Prepare platform-specific posts, schedule them and reply to early comments in the studio’s voice. Always ask the owner to approve before posting.","Post teaser: needs your OK",90,0]]},
+{n:"Analytics & Growth",c:"#1fb5a5",a:[
+["14","Analytics & Growth Specialist","","📈","Reads the numbers and tells the team what to make next.","Social Media Publisher","Studio Manager, Story Writer","You are the Analytics & Growth Specialist. Review views, watch time and audience data weekly, find what worked and give the Studio Manager three ideas for the next episodes.","Building weekly growth report",30,1]]}];
+const TOOLS={"01":"Claude (free plan), Google Docs","02":"Trello or Notion (free), Google Calendar","03":"Claude (free plan), Google Docs","04":"Leonardo.ai or Bing Image Creator (free credits), Canva free","05":"Storyboarder (free, open source), Canva free, Google Slides","06":"Claude for shot lists, Notion free, CapCut for review","07":"FlipaClip or Ibis Paint X (free, phone or tablet), Krita or Pencil2D (free, computer). Procreate Dreams is paid","08":"Krita (free), Ibis Paint X (free), Canva free for color palettes","09":"ElevenLabs free tier, Microsoft Edge Read Aloud, Audacity, YouTube Audio Library, Freesound","10":"CapCut free, DaVinci Resolve free, Shotcut","11":"Claude + a Google Sheets checklist, DaVinci Resolve for frame checks","12":"Claude for titles, Canva free for thumbnails, Google Trends","13":"YouTube Studio, Meta Business Suite and TikTok built-in schedulers, Buffer free","14":"YouTube Studio Analytics, Meta Insights, Google Sheets, Looker Studio"};const NAMES={"01":"Mayari","02":"Tala","03":"Dalisay","04":"Hiraya","05":"Likha","06":"Lakan","07":"Bagani","08":"Ilaya","09":"Himig","10":"Habi","11":"Bantay","12":"Sinag","13":"Hatid","14":"Tanaw"};
+const KEYS={"01":"manager","02":"project","03":"writer","04":"character","05":"storyboard","06":"director","07":"animator","08":"background","09":"sound","10":"editor","11":"qc","12":"marketing","13":"publisher","14":"analytics"};
+const ALL=[M,...R],$=id=>document.getElementById(id),NS="http://www.w3.org/2000/svg";
+const calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+let n=0,run=0;ALL.forEach(d=>d.a.forEach(a=>{n++;run+=a[10]}));$("cnt").textContent=n+" agents · "+run+" running";
+const cx=500,cy=370,hw=125,hh=62,H=56;
+const P=(x,y,u,v)=>[x+(u-v)*hw*.5,y+(u+v)*hh*.5];
+function poly(pts,f,x=""){return `<polygon points="${pts.map(p=>p.join(",")).join(" ")}" fill="${f}" ${x}/>`}
+function desk(x,y,c,w,i){return `<g><polygon points="${x},${y-8} ${x+22},${y+3} ${x},${y+14} ${x-22},${y+3}" fill="#e7e2d8"/><polygon points="${x-22},${y+3} ${x},${y+14} ${x},${y+19} ${x-22},${y+8}" fill="#a9a396"/><rect x="${x-9}" y="${y-27}" width="18" height="13" rx="2" fill="#0b1226" stroke="${c}"/><rect x="${x-7}" y="${y-25}" width="14" height="9" fill="${c}" opacity="${w?.75:.2}"/><g class="${w&&!calm?"bob":""}" style="animation-delay:${i*.3}s"><rect x="${x+14}" y="${y-14}" width="9" height="12" rx="4" fill="${c}"/><circle cx="${x+18.5}" cy="${y-19}" r="5.5" fill="#f2c9a0"/></g></g>`}
+function room(d,x,y,hub){
+const c=d.c,hs=[];let s=`<g class="${hub?"hub":"room"}" tabindex="0" role="button" aria-label="${d.n} department, ${d.a.length} agents">`;
+if(!hub){const L=[[x-hw,y],[x,y-hh],[x,y-hh-H],[x-hw,y-H]],Rr=[[x,y-hh],[x+hw,y],[x+hw,y-H],[x,y-hh-H]];
+s+=poly([[x-hw,y+10],[x,y+hh+10],[x+hw,y+10],[x+hw,y+16],[x,y+hh+16],[x-hw,y+16]],c,'opacity=".45"')+poly([[x-hw,y],[x,y+hh],[x+hw,y],[x+hw,y+10],[x,y+hh+10],[x-hw,y+10]],c,'style="filter:brightness(.6)"')+poly(L,c,'style="filter:brightness(.55)"')+poly(Rr,c,'style="filter:brightness(.75)"')+poly([[x,y-hh],[x+hw,y],[x,y+hh],[x-hw,y]],c,'class="plat"')+poly([[x,y-hh*.62],[x+hw*.62,y],[x,y+hh*.62],[x-hw*.62,y]],"#fff",'opacity=".22"');
+const us=d.a.length==1?[0]:d.a.length==2?[-.3,.3]:[-.55,0,.55];
+d.a.forEach((a,i)=>{const p=P(x,y+4,us[i],0);s+=desk(p[0],p[1],c,a[10],i)});
+s+=`<circle cx="${x-hw*.62}" cy="${y+8}" r="7" fill="#2f9e5a"/><rect x="${x-hw*.62-2}" y="${y+10}" width="4" height="6" fill="#7a4a24"/>`;}
+const r=d.a.filter(a=>a[10]).length,t=d.n+"  ·  "+d.a.length+" agent"+(d.a.length>1?"s":"")+" · "+r+" running",w=t.length*6.4+30,ly=hub?y+hh+36:y-hh-H-18;
+s+=`<rect x="${x-w/2}" y="${ly-13}" width="${w}" height="26" rx="13" fill="#0a1124" stroke="${c}" stroke-width="1.5"/><circle cx="${x-w/2+14}" cy="${ly}" r="4" fill="${c}"/><text x="${x-w/2+24}" y="${ly+4}" font-size="12" font-weight="700" fill="#eaf0ff">${t}</text></g>`;return s}
+let svg=`<defs><radialGradient id="sp"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#7fe7ff"/><stop offset="1" stop-color="#0a8bd6" stop-opacity=".1"/></radialGradient><linearGradient id="bm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7fe7ff" stop-opacity=".8"/><stop offset="1" stop-color="#7fe7ff" stop-opacity="0"/></linearGradient></defs>`;
+const pos=R.map((d,i)=>{const a=(-90+60*i)*Math.PI/180;return[cx+345*Math.cos(a),cy+235*Math.sin(a)]});
+pos.forEach((p,i)=>{svg+=`<line x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="${R[i].c}" stroke-opacity=".5" stroke-width="2" stroke-dasharray="4 7"/>`;
+if(!calm)[0,3].forEach(o=>{svg+=`<circle r="3.5" fill="${R[i].c}"><animateMotion dur="7s" begin="${-o-i}s" repeatCount="indefinite" path="M${cx},${cy} L${p[0]},${p[1]}"/></circle>`})});
+const order=pos.map((p,i)=>[p,i]).sort((a,b)=>a[0][1]-b[0][1]);
+order.forEach(([p,i])=>{svg+=room(R[i],p[0],p[1])});
+svg+=`<g class="hub" tabindex="0" role="button" aria-label="Management department, the studio brain"><ellipse class="plat" cx="${cx}" cy="${cy}" rx="105" ry="52" fill="#0b1630" stroke="#22d3ee" stroke-width="2"/><ellipse class="ring" cx="${cx}" cy="${cy}" rx="72" ry="36" fill="none" stroke="#7fe7ff" stroke-width="2"/><ellipse class="ring" cx="${cx}" cy="${cy}" rx="46" ry="23" fill="#0f3a58" stroke="#7fe7ff" style="animation-delay:.8s"/><rect x="${cx-10}" y="${cy-120}" width="20" height="110" fill="url(#bm)"/><circle cx="${cx}" cy="${cy-8}" r="22" fill="url(#sp)"/></g>`;
+svg+=room(M,cx,cy,1);
+const mp=$("map");mp.innerHTML=svg;
+const chipH=ALL.map((d,i)=>`<button style="--c:${d.c}" data-i="${i}">${d.n}</button>`).join("");$("chips").innerHTML=chipH;
+const sh=$("sheet"),inn=$("in");
+function show(i){const d=ALL[i];sh.style.setProperty("--c",d.c);
+inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button><textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button><div class="rp"></div></div></details>`).join("");
+sh.classList.add("open")}
+document.addEventListener("click",async e=>{const t=e.target,rm=t.closest(".room,.hub"),ch=t.closest("[data-i]");
+if(ch)return show(+ch.dataset.i);
+if(rm){const g=[...mp.querySelectorAll(".room,.hub")];const k=rm.classList.contains("hub")?0:R.findIndex(d=>rm.getAttribute("aria-label").startsWith(d.n+" "))+1;return show(k)}
+if(t.classList.contains("ak")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),tk=bd.querySelector(".tk").value.trim(),url=$("brain").value.trim();rp.style.display="block";
+if(!url){rp.textContent="Paste your studio-brain link at the top of the page first.";return}
+if(!tk){rp.textContent="Type a task first.";return}
+rp.textContent="Thinking…";
+try{const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:KEYS[t.dataset.p],task:tk})});const j=await r.json();rp.textContent=j.reply||("Error: "+(j.error||"no reply"))}catch(_){rp.textContent="Could not reach the brain. Check the link and try again."}
+return}
+if(t.id=="x")sh.classList.remove("open");
+if(t.classList.contains("cp")){const a=ALL.flatMap(d=>d.a).find(a=>a[0]==t.dataset.p);try{await navigator.clipboard.writeText(a[7]);t.textContent="Copied"}catch(_){t.textContent="Select text to copy"}setTimeout(()=>t.textContent="Copy prompt",1500)}
+if(t.classList.contains("go")){t.textContent="Approved ✓";t.style.background="var(--ok)";t.closest(".t").classList.remove("need")}});
+document.addEventListener("keydown",e=>{if((e.key=="Enter"||e.key==" ")&&e.target.matches(".room,.hub")){e.preventDefault();e.target.dispatchEvent(new MouseEvent("click",{bubbles:true}))}});
+$("tasks").innerHTML=ALL.flatMap(d=>d.a.map(a=>`<div class="t ${a[0]=="13"?"need":""}" style="--c:${d.c}"><span class="av" style="--c:${d.c}">${a[3]}</span><div style="flex:1"><b>${a[8]}</b><small>${NAMES[a[0]]} · ${a[1]} · ${d.n}</small><div class="pg"><i style="width:${a[9]}%"></i></div></div>${a[0]=="13"?'<button class="go">Approve</button>':""}</div>`)).join("");
+function tab(o){$("officeV").style.display=o?"":"none";$("tasks").style.display=o?"none":"block";$("tO").setAttribute("aria-selected",o);$("tT").setAttribute("aria-selected",!o);sh.classList.remove("open")}
+try{$("brain").value=localStorage.getItem("brainUrl")||""}catch(_){}
+$("brain").onchange=()=>{try{localStorage.setItem("brainUrl",$("brain").value.trim())}catch(_){}};
+$("tO").onclick=()=>tab(1);$("tT").onclick=()=>tab(0);
+let Z=1;const sc=document.querySelector(".scroll"),dist=e=>Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+function setZ(v){const c=(sc.scrollLeft+sc.clientWidth/2)/sc.scrollWidth;Z=Math.max(.7,Math.min(3,v));mp.style.width=(100*Z)+"%";mp.style.minWidth=(820*Z)+"px";sc.scrollLeft=c*sc.scrollWidth-sc.clientWidth/2;$("zr").textContent=Math.round(Z*100)+"%"}
+$("zi").onclick=()=>setZ(Z+.3);$("zo").onclick=()=>setZ(Z-.3);$("zr").onclick=()=>setZ(1);
+let d0=0,z0=1;sc.addEventListener("touchstart",e=>{if(e.touches.length==2){d0=dist(e);z0=Z}},{passive:true});
+sc.addEventListener("touchmove",e=>{if(e.touches.length==2&&d0){e.preventDefault();setZ(z0*dist(e)/d0)}},{passive:false});
+sc.addEventListener("touchend",e=>{if(e.touches.length<2)d0=0});
 </script>
 </body>
 </html>
