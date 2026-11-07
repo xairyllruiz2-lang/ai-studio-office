@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Studio Office</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f1fa;--floor:#e6e2f4;--card:#fff;--ink:#1d1a33;--mute:#6a6585;--line:#d6d0ea;--shadow:rgba(40,30,90,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12112a;--floor:#1a1938;--card:#242250;--ink:#f1eeff;--mute:#a49fc9;--line:#38356b;--shadow:rgba(0,0,0,.4)}}
+:root[data-theme=dark]{--bg:#12112a;--floor:#1a1938;--card:#242250;--ink:#f1eeff;--mute:#a49fc9;--line:#38356b;--shadow:rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.45}
+header{padding:20px 16px 8px;max-width:1100px;margin:auto}
+h1{font-size:clamp(26px,6vw,40px);margin:0;font-weight:800;letter-spacing:-.02em}
+header p{margin:4px 0 14px;color:var(--mute);max-width:60ch}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 16px;font-weight:600}
+#run{background:#6c4cf5;color:#fff}
+#run:disabled{opacity:.6}
+.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+button:focus-visible{outline:3px solid #f5a524;outline-offset:2px}
+#stat{color:var(--mute);font-size:14px}
+main{max-width:1100px;margin:auto;padding:8px 16px 24px;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.room{background:var(--floor);border:2px solid var(--c);border-radius:18px;padding:12px;position:relative;box-shadow:0 6px 18px var(--shadow)}
+.room h2{margin:0 0 10px;font-size:16px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.room h2 i{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block}
+.desks{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.desk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px 8px;text-align:center;width:100%;color:var(--ink);position:relative;transition:transform .15s,border-color .15s}
+.desk:hover{transform:translateY(-3px);border-color:var(--c)}
+.av{width:52px;height:52px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:26px;background:color-mix(in srgb,var(--c) 22%,var(--card));border:2px solid var(--c)}
+.desk b{display:block;font-size:13px;line-height:1.2}
+.desk small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.dot{position:absolute;top:8px;right:8px;width:10px;height:10px;border-radius:50%;background:#9a96b8}
+.desk.work .dot{background:#f5a524;animation:p 0.8s infinite}
+.desk.work{border-color:#f5a524;transform:translateY(-3px)}
+.desk.done .dot{background:#2fbf71}
+.bub{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);background:#f5a524;color:#1d1a33;font-size:11px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap;z-index:3;display:none;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.desk.work .bub{display:block}
+@keyframes p{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none!important}.desk{transition:none}}
+#log{max-width:1100px;margin:0 auto;padding:0 16px 30px}
+#log div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;max-height:200px;overflow:auto}
+#log p{margin:2px 0;color:var(--mute)}
+#log p b{color:var(--ink)}
+#sheet{position:fixed;inset:auto 0 0 0;background:var(--card);color:var(--ink);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px var(--shadow);transform:translateY(105%);transition:transform .25s;max-height:78vh;overflow:auto;z-index:10;max-width:720px;margin:auto;border:1px solid var(--line)}
+#sheet.open{transform:none}
+#sheet h3{margin:0;font-size:20px}
+#sheet h4{margin:14px 0 4px;font-size:13px;color:var(--mute);font-weight:600}
+#sheet pre{white-space:pre-wrap;background:var(--floor);padding:10px;border-radius:10px;font:13px/1.45 ui-monospace,monospace;margin:0}
+#sheet .x{float:right;background:var(--floor);color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+<h1>🎬 AI Studio Office</h1>
+<p>14 AI employees, 7 departments. Tap any desk to see the job description and prompt. Press Run to watch one episode move through the studio.</p>
+<div class="bar"><button id="run">▶ Run an episode</button><button class="ghost" id="reset">Reset</button><span id="stat">All desks idle</span></div>
+</header>
+<main id="office"></main>
+<section id="log"><div id="logbox"><p>Activity log will appear here.</p></div></section>
+<aside id="sheet" role="dialog" aria-label="Employee details"></aside>
+<script>
+// ---------- EDIT THIS LIST to change your team ----------
+// free = the free tool this employee uses. out = what they hand to the next person.
+var DEPTS=[
+{n:"Management",c:"#6c4cf5",a:[
+ {id:1,e:"🧠",r:"Studio Manager (Main AI)",who:"Maya",msg:"Reading the brief…",out:"Episode plan + task list",free:"Cloudflare Worker + Workers AI (free tier). Receives your request, creates GitHub Issues for each task.",p:"You are the Studio Manager of an AI animation studio. Turn the owner's idea into a clear episode brief, split it into tasks, assign each task to the right employee, and report status back to the owner. Never do specialist work yourself; delegate."},
+ {id:2,e:"📋",r:"Project Manager",who:"Omar",msg:"Setting deadlines…",out:"Schedule + task board",free:"GitHub Projects (free) board. Moves issues between To do / Doing / Review / Done.",p:"You are the Project Manager. Track every task on the board, set deadlines, flag blockers, and ping the Studio Manager when something is late. Keep a one-line status per task."}]},
+{n:"Creative",c:"#e8497a",a:[
+ {id:3,e:"✍️",r:"Story Writer",who:"Lena",msg:"Writing the script…",out:"Script + scene list",free:"Workers AI text model (Llama) via a Worker endpoint. Saves script.md in the repo.",p:"You are the Story Writer for a kids-friendly animated series. Write a short, clear script with scenes, dialogue and a simple moral. Output markdown: Title, Logline, Scenes (1..n) with action and dialogue."},
+ {id:4,e:"🎨",r:"Character Designer",who:"Kai",msg:"Sketching characters…",out:"Character sheets",free:"Workers AI image model (Stable Diffusion) for concepts. Stores prompts in characters.json for consistency.",p:"You are the Character Designer. For each character, write a locked visual description (age, shape, colors, outfit, face, style) reusable as an image prompt. Keep the same description every episode."},
+ {id:5,e:"🖼️",r:"Storyboard Artist",who:"Noor",msg:"Drawing panels…",out:"Shot list + panels",free:"Workers AI image model for panels. Saves storyboard.md with one prompt per shot.",p:"You are the Storyboard Artist. Break each scene into shots with camera angle, framing, action and an image prompt that reuses the character descriptions exactly."}]},
+{n:"Animation",c:"#ff8a3d",a:[
+ {id:6,e:"🎥",r:"Animation Director",who:"Rex",msg:"Planning motion…",out:"Animation notes",free:"Text model. Writes motion notes per shot (timing, movement, expression).",p:"You are the Animation Director. For each shot, define duration, movement, expressions and transitions. Keep the style consistent across the whole episode."},
+ {id:7,e:"🤖",r:"AI Animator",who:"Zed",msg:"Animating shots…",out:"Animated clips",free:"Free image-to-video tools (e.g. open-source models on Hugging Face Spaces) or Cloudflare image frames stitched with ffmpeg in GitHub Actions.",p:"You are the AI Animator. Turn each storyboard panel plus motion note into a short clip. Report which shots are done and which failed, with the prompt used."},
+ {id:8,e:"🏞️",r:"Background Artist",who:"Ivy",msg:"Painting backgrounds…",out:"Background plates",free:"Workers AI image model. Saves backgrounds to Cloudflare R2 free tier (10 GB).",p:"You are the Background Artist. Create a consistent set of background prompts per location (day, night, mood, palette) and keep them in the same art style."}]},
+{n:"Audio & Post",c:"#1fa6a6",a:[
+ {id:9,e:"🎧",r:"Voice & Sound Designer",who:"Sam",msg:"Recording voices…",out:"Voice + music tracks",free:"Free TTS (Workers AI text-to-speech or open-source Piper TTS) and royalty-free music.",p:"You are the Voice & Sound Designer. Assign a voice to each character, generate dialogue audio line by line, and list sound effects and music cues with timestamps."},
+ {id:10,e:"✂️",r:"Video Editor",who:"Tia",msg:"Cutting the episode…",out:"Final cut",free:"ffmpeg inside GitHub Actions (free minutes). Joins clips, audio and subtitles into episode.mp4.",p:"You are the Video Editor. Assemble clips, voice, music and subtitles in script order. Output an edit list (EDL) and the ffmpeg commands to render the final cut."}]},
+{n:"Quality Control",c:"#3f8f3f",a:[
+ {id:11,e:"🔍",r:"Quality Control Supervisor",who:"Hana",msg:"Checking quality…",out:"Approve / fix list",free:"Text model with a checklist: story, character consistency, audio sync, safety. Opens GitHub Issues for fixes.",p:"You are the QC Supervisor. Review the final cut against the checklist: plot clarity, character consistency, audio sync, subtitles, kid-safety. Return APPROVED or a numbered fix list with the responsible employee."}]},
+{n:"Publishing & Marketing",c:"#d4a017",a:[
+ {id:12,e:"📣",r:"Publishing & Marketing Manager",who:"Leo",msg:"Planning the launch…",out:"Titles, tags, schedule",free:"Text model. Writes title, description, hashtags, thumbnail prompt and a posting calendar.",p:"You are the Publishing & Marketing Manager. Write a catchy title, description, tags and a release schedule for each platform. Request a thumbnail from the Background Artist."},
+ {id:13,e:"📱",r:"Social Media Publisher",who:"Zoe",msg:"Posting everywhere…",out:"Live posts",free:"GitHub Actions cron + free platform APIs (YouTube Data API, etc.). Posts at the scheduled time.",p:"You are the Social Media Publisher. Post the approved video and caption to each platform on schedule, then return the live links and any errors."}]},
+{n:"Analytics & Growth",c:"#4a7bd8",a:[
+ {id:14,e:"📈",r:"Analytics & Growth Specialist",who:"Ravi",msg:"Reading the numbers…",out:"Weekly growth report",free:"Cloudflare Web Analytics (free) + platform stats. Writes a weekly report.md and ideas for the next episode.",p:"You are the Analytics & Growth Specialist. Summarize views, watch time and audience feedback, find what worked, and suggest three ideas for the next episode. Send them to the Studio Manager."}]}
+];
+// ---------- app ----------
+var office=document.getElementById('office'),logbox=document.getElementById('logbox'),sheet=document.getElementById('sheet'),stat=document.getElementById('stat'),runBtn=document.getElementById('run');
+var all=[],els={},running=false;
+DEPTS.forEach(function(d){
+ var room=document.createElement('section');room.className='room';room.style.setProperty('--c',d.c);
+ room.innerHTML='<h2><i></i>'+d.n+'</h2><div class="desks"></div>';
+ var wrap=room.querySelector('.desks');
+ d.a.forEach(function(a){
+  a.dept=d.n;all.push(a);
+  var b=document.createElement('button');b.className='desk';b.style.setProperty('--c',d.c);
+  b.innerHTML='<span class="bub"></span><span class="dot"></span><div class="av">'+a.e+'</div><b>'+a.who+'</b><small>'+a.r+'</small>';
+  b.onclick=function(){open(a)};
+  wrap.appendChild(b);els[a.id]=b;
+ });
+ office.appendChild(room);
+});
+function open(a){
+ sheet.innerHTML='<button class="x" aria-label="Close">Close</button><h3>'+a.e+' '+a.who+' · '+a.r+'</h3><p style="color:var(--mute);margin:2px 0">'+a.dept+' department</p><h4>Hands off</h4><div>'+a.out+'</div><h4>Free tool</h4><div>'+a.free+'</div><h4>Agent prompt (copy into your Worker)</h4><pre></pre>';
+ sheet.querySelector('pre').textContent=a.p;
+ sheet.querySelector('.x').onclick=function(){sheet.classList.remove('open')};
+ sheet.classList.add('open');
+}
+function say(t,w){var p=document.createElement('p');p.innerHTML='<b>'+w+':</b> '+t;if(logbox.querySelector('p')&&logbox.children.length===1&&logbox.textContent.indexOf('Activity log')===0)logbox.innerHTML='';logbox.appendChild(p);logbox.scrollTop=logbox.scrollHeight}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function reset(){all.forEach(function(a){els[a.id].className='desk';els[a.id].querySelector('.bub').textContent=''});stat.textContent='All desks idle';logbox.innerHTML='<p>Activity log will appear here.</p>'}
+async function run(){
+ if(running)return;running=true;runBtn.disabled=true;reset();
+ var prev=null;
+ for(var i=0;i<all.length;i++){
+  var a=all[i],el=els[a.id];
+  el.classList.add('work');el.querySelector('.bub').textContent=a.msg;
+  stat.textContent=(i+1)+' of '+all.length+' · '+a.who+' is working';
+  if(prev)say('handed over "'+prev.out+'" to '+a.who,prev.who);
+  await wait(750);
+  el.classList.remove('work');el.classList.add('done');prev=a;
+ }
+ say('episode published. Report sent back to the Studio Manager.',prev.who);
+ stat.textContent='Episode complete ✔';running=false;runBtn.disabled=false;
+}
+runBtn.onclick=run;document.getElementById('reset').onclick=function(){if(!running)reset()};
+</script>
+</body>
+</html>
