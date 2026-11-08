@@ -76,6 +76,15 @@ pre{white-space:pre-wrap;background:#0a1124;border-radius:10px;padding:10px;font
 .rimg{display:none;max-width:130px;border-radius:8px;margin-bottom:6px}
 .rg{background:#1fb5a5!important}
 .up{cursor:pointer;background:var(--ink);color:#0a1020;font-weight:700;padding:7px 14px;border-radius:10px}
+.vb{margin:8px 0;padding:8px;border:1px dashed var(--line);border-radius:10px;font-size:13px}
+.vrow{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0;align-items:center}
+.vrow label{display:flex;gap:6px;align-items:center}
+.vrow input[type=number]{width:74px;padding:8px 6px;border-radius:10px;border:1px solid var(--line);background:#0a1124;color:var(--ink);font:inherit;text-align:center}
+.bv{background:#d9a441!important;color:#1a1405!important}
+.bs{background:#5a6685!important;margin-left:8px}
+.cp:disabled{opacity:.45;cursor:default}
+.vm{margin-top:8px}
+.vo video,.vo canvas{width:100%;border-radius:8px;margin-top:8px;background:#000}
 </style>
 </head>
 <body>
@@ -120,11 +129,13 @@ let n=0,run=0;ALL.forEach(d=>d.a.forEach(a=>{n++;run+=a[10]}));$("cnt").textCont
 const chipH=ALL.map((d,i)=>`<button style="--c:${d.c}" data-i="${i}">${d.n}</button>`).join("");$("chips").innerHTML=chipH;
 const sh=$("sheet"),inn=$("in");
 function show(i){const d=ALL[i];sh.style.setProperty("--c",d.c);
-inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button>${["05","07"].includes(a[0])?REFUI:""}<textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button>${["04","08"].includes(a[0])?`<button class="cp dr" data-p="${a[0]}">Draw</button>`:""}${["05","07"].includes(a[0])?`<input class="fc" type="number" min="1" max="6" value="6" aria-label="Number of frames"><button class="cp fr" data-p="${a[0]}">Draw frames</button>`:""}${a[0]=="09"?`<button class="cp sp" data-p="09">🔊 Speak Tagalog</button><button class="cp st" data-p="09">Stop</button>`:""}<div class="rp"></div></div></details>`).join("");
+inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button>${["05","07"].includes(a[0])?REFUI:""}${a[0]=="10"?BUILDUI:""}<textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button>${["04","08"].includes(a[0])?`<button class="cp dr" data-p="${a[0]}">Draw</button>`:""}${["05","07"].includes(a[0])?`<input class="fc" type="number" min="1" max="6" value="6" aria-label="Number of frames"><button class="cp fr" data-p="${a[0]}">Draw frames</button>`:""}${a[0]=="09"?`<button class="cp sp" data-p="09">🔊 Speak Tagalog</button><button class="cp st" data-p="09">Stop</button>`:""}<div class="rp"></div></div></details>`).join("");
 sh.classList.add("open")}
 document.addEventListener("click",async e=>{const t=e.target,rm=t.closest(".room,.hub"),ch=t.closest("[data-i]");
 if(ch){focusDept(+ch.dataset.i);return show(+ch.dataset.i)}
 if(rm){const g=[...mp.querySelectorAll(".room,.hub")];const k=rm.classList.contains("hub")?0:R.findIndex(d=>rm.getAttribute("aria-label").startsWith(d.n+" "))+1;return show(k)}
+if(t.classList.contains("bs")){if(VB.stop)VB.stop();return}
+if(t.classList.contains("bv")){buildVideo(t.closest(".bd"));return}
 if(t.classList.contains("rg")){const k=t.dataset.k,bd=t.closest(".bd"),rp=bd.querySelector(".rp"),d=bd.querySelector(k=="char"?".cd":".bd2").value.trim();rp.style.display="block";
 if(!d){rp.textContent="Write the description first.";return}
 if(k=="char")REF.cd=d;else REF.bd=d;
@@ -140,13 +151,14 @@ rp.innerHTML="";const grid=document.createElement("div");grid.style.cssText="dis
 try{let poses;
 if(lines.length>1)poses=lines.slice(0,n);
 else{msg.textContent="Planning "+n+" connected poses…";poses=await planFrames(lines[0],n);if(!poses)poses=Array.from({length:n},(_,i)=>lines[0]+" (small step "+(i+1)+" of "+n+" of one continuous motion, only slightly different from the previous pose)")}
+let stoWarn="";try{await FS.reset(poses.length,NAMES[t.dataset.p])}catch(e){stoWarn=" Frames could not be saved for Habi: "+e.message+"."}
 let prev=null;
 for(let i=0;i<poses.length;i++){msg.textContent="Drawing frame "+(i+1)+" of "+poses.length+"… about 20 seconds each";
 const refs=[REF.char,REF.bg];if(prev)refs.push(prev);
 const pr="Image 0 is the approved character reference: keep the face, hairstyle, outfit, accessories, colors and body proportions exactly the same. Image 1 is the approved background: keep the same environment, trees, lighting, atmosphere and camera angle exactly the same. "+(prev?"Image 2 is the previous frame: keep the character at the same position and scale and the background identical, and change ONLY the pose. ":"Place the character in that background. ")+"Flat 2D donghua anime style, clean lineart, flat cel colors. Pose: "+poses[i];
-const img=await art(pr,refs,1024,576);prev=await shrink("data:image/jpeg;base64,"+img,480);
+const img=await art(pr,refs,1024,576);try{await FS.put(i+1,img)}catch(e){stoWarn=" Frame "+(i+1)+" could not be saved for Habi: "+e.message+"."}prev=await shrink("data:image/jpeg;base64,"+img,480);
 const c=document.createElement("figure");c.style.margin=0;const im=new Image();im.src="data:image/jpeg;base64,"+img;im.style.cssText="width:100%;border-radius:8px";const a=document.createElement("a");a.href=im.src;a.download="lunarag-frame-"+(i+1)+".jpg";a.textContent="Frame "+(i+1)+" · Save";a.style.cssText="display:block;margin-top:4px;color:#e8c36a;font-size:13px";c.append(im,a);grid.append(c)}
-msg.textContent="Done: "+poses.length+" connected frames. Save each one, then import them into FlipaClip."}
+msg.textContent="Done: "+poses.length+" connected frames."+(stoWarn||" They are saved for Habi: open Habi and tap Build Video. You can also Save each one.")}
 catch(e){msg.textContent="Stopped: "+e.message+". Your free daily drawing limit may be used up."}
 t.disabled=false;return}
 if(t.classList.contains("st")){speechSynthesis.cancel();return}
@@ -332,6 +344,89 @@ document.addEventListener("change",async e=>{const t=e.target;
 if(t.matches("input[type=file][data-k]")&&t.files[0]){try{const u=await new Promise((ok,no)=>{const f=new FileReader();f.onload=()=>ok(f.result);f.onerror=no;f.readAsDataURL(t.files[0])});REF[t.dataset.k]=await shrink(u,480);saveRefs()}catch(_){}t.value="";return}
 if(t.classList.contains("cd")){REF.cd=t.value;saveRefs()}if(t.classList.contains("bd2")){REF.bd=t.value;saveRefs()}});
 new MutationObserver(saveRefs).observe(inn,{childList:true});
+
+/* ===== Habi: frame storage (IndexedDB) and video builder ===== */
+/*PURE_START*/
+function b2blob(b64){const bin=atob(String(b64).replace(/^data:[^,]+,/,"")),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const png=u[0]===0x89&&u[1]===0x50&&u[2]===0x4e&&u[3]===0x47;return new Blob([u],{type:png?"image/png":"image/jpeg"})}
+function frameAt(t,dur,n,reps,fade){const seg=Math.floor(t/dur),i=seg%n,local=(t-seg*dur)/dur;let a=0;if(fade&&seg<n*reps-1&&local>.6)a=(local-.6)/.4;return{i,j:(i+1)%n,a}}
+function missingFrames(keys,total){const have=new Set(keys),m=[];for(let i=1;i<=total;i++)if(!have.has(i))m.push(i);return m}
+function pickMime(){if(typeof MediaRecorder==="undefined")return null;const c=["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm","video/mp4;codecs=avc1","video/mp4"];for(const m of c){try{if(MediaRecorder.isTypeSupported(m))return m}catch(_){}}return null}
+function fmtLabel(m){const k=m.startsWith("video/mp4")?"MP4":"WebM",c=(m.split("codecs=")[1]||"");return k+(c?" ("+c+")":"")}
+/*PURE_END*/
+const FS={db:null,
+open(){if(this.db)return Promise.resolve(this.db);return new Promise((ok,no)=>{if(!window.indexedDB)return no(new Error("This browser has no IndexedDB storage."));let r;try{r=indexedDB.open("lunarag-studio",1)}catch(e){return no(new Error("Browser storage is unavailable (private mode?)."))}
+r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("frames"))d.createObjectStore("frames",{keyPath:"k"});if(!d.objectStoreNames.contains("meta"))d.createObjectStore("meta",{keyPath:"k"})};
+r.onsuccess=()=>{this.db=r.result;this.db.onversionchange=()=>{this.db.close();this.db=null};ok(this.db)};
+r.onerror=()=>no(new Error("Could not open browser storage"+(r.error?" ("+r.error.name+")":"")+"."));
+r.onblocked=()=>no(new Error("Browser storage is blocked by another LUNARAG tab. Close it and try again."))})},
+tx(stores,mode,fn){return this.open().then(d=>new Promise((ok,no)=>{let out,t;try{t=d.transaction(stores,mode)}catch(e){return no(new Error("Storage error: "+e.name))}
+t.oncomplete=()=>ok(out&&out.result!==undefined?out.result:out);
+t.onerror=()=>no(new Error("Storage error"+(t.error?" ("+t.error.name+")":"")));
+t.onabort=()=>no(new Error(t.error&&t.error.name==="QuotaExceededError"?"storage is full. Free some space on your phone.":"storage failed"+(t.error?" ("+t.error.name+")":"")));
+try{out=fn(t)}catch(e){try{t.abort()}catch(_){}no(e)}}))},
+reset(total,by){try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(_){}return this.tx(["frames","meta"],"readwrite",t=>{t.objectStore("frames").clear();t.objectStore("meta").put({k:"current",total,by,savedAt:Date.now()})})},
+put(k,b64){const blob=b2blob(b64);return this.tx(["frames"],"readwrite",t=>{t.objectStore("frames").put({k,blob})})},
+all(){return this.tx(["frames","meta"],"readonly",t=>{const f=t.objectStore("frames").getAll(),m=t.objectStore("meta").get("current");return{get result(){return{frames:(f.result||[]).sort((a,b)=>a.k-b.k),meta:m.result||null}}}})}};
+const BUILDUI=`<div class="vb"><b>Build a video from the saved frames</b>
+<div class="vs">Checking saved frames…</div>
+<div class="vrow"><label>Seconds per frame <input class="vd" type="number" min="0.05" max="3" step="0.05" value="0.25"></label><label>Repeat <input class="vr" type="number" min="1" max="10" step="1" value="3"></label><label><input class="vx" type="checkbox" checked> Smooth crossfade</label></div>
+<button class="cp bv">Build Video</button><button class="cp bs" disabled>Stop</button>
+<div class="vm" aria-live="polite">Keep this screen open while it builds.</div><div class="vo"><canvas class="vc" style="display:none"></canvas></div></div>`;
+const VB={busy:false,stop:null,url:null};
+async function refreshVS(){const el=inn.querySelector(".vs");if(!el)return;const mime=pickMime();let s;
+try{const d=await FS.all(),n=d.frames.length,tot=d.meta?d.meta.total:n;s=n?n+(n<tot?" of "+tot:"")+" frame"+(n>1?"s":"")+" saved by "+((d.meta&&d.meta.by)||"Bagani")+(d.meta?" at "+new Date(d.meta.savedAt).toLocaleTimeString():""):"No frames saved yet. Open Bagani, lock the look, and tap Draw frames."}catch(e){s="Can't read saved frames: "+e.message}
+el.textContent=s+" · "+(mime?"Video format on this browser: "+fmtLabel(mime):"This browser can't record video (use Chrome on Android).");
+const b=inn.querySelector(".bv");if(b&&!mime)b.disabled=true}
+async function buildVideo(bd){
+const vm=bd.querySelector(".vm"),vo=bd.querySelector(".vo"),bvb=bd.querySelector(".bv"),bsb=bd.querySelector(".bs"),cvs=bd.querySelector(".vc");
+const say=(m,bad)=>{vm.textContent=m;vm.style.color=bad?"#ff9a9a":""};
+if(VB.busy)return say("Already building. Wait for it to finish or tap Stop.",1);
+const mime=pickMime();if(!mime)return say("This browser can't record video. Use Chrome on Android (version 100 or newer).",1);
+const dur=Math.max(.05,Math.min(3,+bd.querySelector(".vd").value||.25))*1000,reps=Math.max(1,Math.min(10,Math.round(+bd.querySelector(".vr").value||3))),fade=bd.querySelector(".vx").checked;
+let data;try{data=await FS.all()}catch(e){return say("Could not read the saved frames: "+e.message,1)}
+const fr=data.frames;
+if(fr.length<2)return say(fr.length?"Only 1 frame is saved. Draw at least 2 frames with Bagani first.":"No frames saved yet. Open Bagani, lock the look, and tap Draw frames. Then come back here.",1);
+const missing=missingFrames(fr.map(x=>x.k),data.meta?data.meta.total:fr.length),len=fr.length*dur*reps;
+if(len>90000)return say("That video would be "+Math.round(len/1000)+" seconds. Lower Repeat or Seconds per frame (limit 90 seconds).",1);
+VB.busy=true;bvb.disabled=true;bsb.disabled=false;vo.querySelectorAll("video,a").forEach(x=>x.remove());
+const imgs=[];let wl=null,rec=null,stream=null,raf=0,stopped=false,abort="",recErr="";
+const onVis=()=>{if(document.hidden&&VB.stop)VB.stop("The build stopped because you left the page. Stay on this screen and try again.")};
+try{
+say("Reading frames…");
+for(const f of fr){try{imgs.push(await createImageBitmap(f.blob))}catch(_){throw new Error("Frame "+f.k+" is damaged or unreadable. Draw it again with Bagani.")}}
+const W=1024,H=576;cvs.width=W;cvs.height=H;cvs.style.display="block";const g=cvs.getContext("2d");
+if(!cvs.captureStream)throw new Error("This browser can't capture canvas video.");
+stream=cvs.captureStream(30);
+try{rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000})}catch(e){throw new Error("Could not start the recorder: "+e.message)}
+const chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recErr=(e.error&&e.error.message)||"recorder error"};
+const stopped$=new Promise(r=>{rec.onstop=r});
+try{if(navigator.wakeLock)wl=await navigator.wakeLock.request("screen")}catch(_){}
+document.addEventListener("visibilitychange",onVis);
+const draw=(im,a)=>{const k=Math.min(W/im.width,H/im.height),w=im.width*k,h=im.height*k;g.globalAlpha=a;g.drawImage(im,(W-w)/2,(H-h)/2,w,h);g.globalAlpha=1};
+try{rec.start(250)}catch(e){throw new Error("Could not start recording: "+e.message)}
+const t0=performance.now();
+await new Promise(res=>{VB.stop=why=>{if(why)abort=why;stopped=true;res()};
+const tick=now=>{if(stopped)return;const t=Math.max(0,now-t0);if(t>=len){res();return}
+const f=frameAt(t,dur,imgs.length,reps,fade);g.fillStyle="#000";g.fillRect(0,0,W,H);draw(imgs[f.i],1);if(f.a>0)draw(imgs[f.j],f.a);
+say("Building… "+Math.round(t/len*100)+"%");raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick)});
+cancelAnimationFrame(raf);
+if(rec.state!=="inactive")try{rec.stop()}catch(_){}
+await Promise.race([stopped$,new Promise(r=>setTimeout(r,5000))]);
+if(abort)throw new Error(abort);
+if(recErr)throw new Error("Recording failed: "+recErr);
+const blob=new Blob(chunks,{type:mime.split(";")[0]});
+if(!blob.size)throw new Error("The recorder made an empty file. Try again, or lower the seconds per frame.");
+if(VB.url)URL.revokeObjectURL(VB.url);VB.url=URL.createObjectURL(blob);
+const ext=mime.startsWith("video/mp4")?"mp4":"webm";
+cvs.style.display="none";
+const v=document.createElement("video");v.src=VB.url;v.controls=true;v.playsInline=true;v.loop=true;v.setAttribute("playsinline","");
+const a=document.createElement("a");a.href=VB.url;a.download="lunarag-frames-video."+ext;a.textContent="Download video ("+ext.toUpperCase()+", "+Math.round(blob.size/1024)+" KB)";a.style.cssText="display:block;margin-top:8px;color:#e8c36a;font-weight:700";
+vo.append(v,a);
+say((stopped?"Stopped early. Partial video kept: ":"Done: ")+fr.length+" frames, "+(len/1000).toFixed(1)+" s, "+fmtLabel(mime)+"."+(missing.length?" Frame"+(missing.length>1?"s ":" ")+missing.join(", ")+" "+(missing.length>1?"were":"was")+" missing, so the video uses the others.":"")+(ext==="webm"?" WebM from the browser may show no time bar, but it plays.":""),0)
+}catch(e){cvs.style.display="none";say(e.message,1)}
+finally{cancelAnimationFrame(raf);document.removeEventListener("visibilitychange",onVis);VB.stop=null;VB.busy=false;bvb.disabled=false;bsb.disabled=true;
+try{if(stream)stream.getTracks().forEach(x=>x.stop())}catch(_){}try{if(wl)wl.release()}catch(_){}imgs.forEach(im=>{try{im.close()}catch(_){}})}}
+new MutationObserver(()=>{if(inn.querySelector(".vs"))refreshVS()}).observe(inn,{childList:true});
 </script>
 </body>
 </html>
