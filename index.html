@@ -70,6 +70,12 @@ pre{white-space:pre-wrap;background:#0a1124;border-radius:10px;padding:10px;font
 #c3{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 .hint{max-width:1000px;margin:4px auto;padding:0 16px;color:var(--mute);font-size:13px}
 #sheet{max-height:52vh}
+.refs{margin:8px 0;padding:8px;border:1px dashed var(--line);border-radius:10px;font-size:13px}
+.refs textarea{width:100%;min-height:52px;margin:4px 0;background:#0a1124;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;font:inherit}
+.rrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.rimg{display:none;max-width:130px;border-radius:8px;margin-bottom:6px}
+.rg{background:#1fb5a5!important}
+.up{cursor:pointer;background:var(--ink);color:#0a1020;font-weight:700;padding:7px 14px;border-radius:10px}
 </style>
 </head>
 <body>
@@ -114,23 +120,35 @@ let n=0,run=0;ALL.forEach(d=>d.a.forEach(a=>{n++;run+=a[10]}));$("cnt").textCont
 const chipH=ALL.map((d,i)=>`<button style="--c:${d.c}" data-i="${i}">${d.n}</button>`).join("");$("chips").innerHTML=chipH;
 const sh=$("sheet"),inn=$("in");
 function show(i){const d=ALL[i];sh.style.setProperty("--c",d.c);
-inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button><textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button>${["04","08"].includes(a[0])?`<button class="cp dr" data-p="${a[0]}">Draw</button>`:""}${["05","07"].includes(a[0])?`<input class="fc" type="number" min="1" max="6" value="4" aria-label="Number of frames"><button class="cp fr" data-p="${a[0]}">Draw frames</button>`:""}${a[0]=="09"?`<button class="cp sp" data-p="09">🔊 Speak Tagalog</button><button class="cp st" data-p="09">Stop</button>`:""}<div class="rp"></div></div></details>`).join("");
+inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button>${["05","07"].includes(a[0])?REFUI:""}<textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button>${["04","08"].includes(a[0])?`<button class="cp dr" data-p="${a[0]}">Draw</button>`:""}${["05","07"].includes(a[0])?`<input class="fc" type="number" min="1" max="6" value="6" aria-label="Number of frames"><button class="cp fr" data-p="${a[0]}">Draw frames</button>`:""}${a[0]=="09"?`<button class="cp sp" data-p="09">🔊 Speak Tagalog</button><button class="cp st" data-p="09">Stop</button>`:""}<div class="rp"></div></div></details>`).join("");
 sh.classList.add("open")}
 document.addEventListener("click",async e=>{const t=e.target,rm=t.closest(".room,.hub"),ch=t.closest("[data-i]");
 if(ch){focusDept(+ch.dataset.i);return show(+ch.dataset.i)}
 if(rm){const g=[...mp.querySelectorAll(".room,.hub")];const k=rm.classList.contains("hub")?0:R.findIndex(d=>rm.getAttribute("aria-label").startsWith(d.n+" "))+1;return show(k)}
-if(t.classList.contains("fr")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),raw=bd.querySelector(".tk").value.trim(),url=$("brain").value.trim().replace("studio-brain","studio-art");rp.style.display="block";
-if(url.indexOf("studio-art")<0){rp.textContent="Paste your studio-brain link at the top of the page first.";return}
-if(!raw){rp.textContent="Describe the scene first. One line makes automatic frames; or write one line per frame.";return}
-const n=Math.max(1,Math.min(6,+bd.querySelector(".fc").value||4)),lines=raw.split(/\n+/).map(x=>x.replace(/^\s*(frame\s*)?\d+[\).:\-]\s*/i,"").trim()).filter(Boolean);
-const PH=["opening pose, calm start","anticipation, the action begins","mid-action, peak movement","reaction to what just happened","settling, motion slows","closing pose, final shot"];
-const fr=lines.length>1?lines.slice(0,6):Array.from({length:n},(_,i)=>lines[0]+", same character and same location in every frame, keyframe "+(i+1)+" of "+n+": "+PH[Math.round(i*5/Math.max(1,n-1))]);
+if(t.classList.contains("rg")){const k=t.dataset.k,bd=t.closest(".bd"),rp=bd.querySelector(".rp"),d=bd.querySelector(k=="char"?".cd":".bd2").value.trim();rp.style.display="block";
+if(!d){rp.textContent="Write the description first.";return}
+if(k=="char")REF.cd=d;else REF.bd=d;
+t.disabled=true;rp.textContent="Making the "+(k=="char"?"character":"background")+" reference… about 20 seconds";
+try{const pr=k=="char"?"Character reference sheet: "+d+". Single character, full body, front view, neutral standing pose, plain light grey background, flat 2D donghua anime style, clean lineart, flat cel shading.":"Background plate: "+d+". No people, no characters, empty environment, one fixed wide camera, flat 2D donghua anime background painting, soft atmospheric lighting.";
+const img=await art(pr,[],k=="char"?512:1024,k=="char"?768:576);REF[k]=await shrink("data:image/jpeg;base64,"+img,480);saveRefs();rp.textContent="Reference saved on this phone. Tap again for a different one, or use Upload for your own art."}catch(e){rp.textContent="Error: "+e.message}
+t.disabled=false;return}
+if(t.classList.contains("fr")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),act=bd.querySelector(".tk").value.trim();rp.style.display="block";
+if(!REF.char||!REF.bg){rp.textContent="Lock the look first: make or upload BOTH the character reference and the background reference above.";return}
+if(!act){rp.textContent="Describe the motion first, for example: she draws her knife and steps forward.";return}
+const n=Math.max(1,Math.min(6,+bd.querySelector(".fc").value||6)),lines=act.split(/\n+/).map(x=>x.replace(/^\s*(frame\s*)?\d+[\).:\-]\s*/i,"").trim()).filter(Boolean);
 rp.innerHTML="";const grid=document.createElement("div");grid.style.cssText="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px";const msg=document.createElement("div");msg.style.marginTop="8px";rp.append(grid,msg);t.disabled=true;
-for(let i=0;i<fr.length;i++){msg.textContent="Drawing frame "+(i+1)+" of "+fr.length+"… about 15 seconds each";
-try{const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:"storyboard",task:fr[i]})});const j=await r.json();if(!j.image)throw new Error(j.error||"no image");
-const c=document.createElement("figure");c.style.margin=0;const im=new Image();im.src="data:image/jpeg;base64,"+j.image;im.style.cssText="width:100%;border-radius:8px";const a=document.createElement("a");a.href=im.src;a.download="lunarag-frame-"+(i+1)+".jpg";a.textContent="Frame "+(i+1)+" · Save";a.style.cssText="display:block;margin-top:4px;color:#e8c36a;font-size:13px";c.append(im,a);grid.append(c)}
-catch(e){msg.textContent="Stopped at frame "+(i+1)+": "+e.message+". Your free daily drawing limit may be used up.";t.disabled=false;return}}
-msg.textContent="Done: "+fr.length+" frames. Save each one, then import them into FlipaClip.";t.disabled=false;return}
+try{let poses;
+if(lines.length>1)poses=lines.slice(0,n);
+else{msg.textContent="Planning "+n+" connected poses…";poses=await planFrames(lines[0],n);if(!poses)poses=Array.from({length:n},(_,i)=>lines[0]+" (small step "+(i+1)+" of "+n+" of one continuous motion, only slightly different from the previous pose)")}
+let prev=null;
+for(let i=0;i<poses.length;i++){msg.textContent="Drawing frame "+(i+1)+" of "+poses.length+"… about 20 seconds each";
+const refs=[REF.char,REF.bg];if(prev)refs.push(prev);
+const pr="Image 0 is the approved character reference: keep the face, hairstyle, outfit, accessories, colors and body proportions exactly the same. Image 1 is the approved background: keep the same environment, trees, lighting, atmosphere and camera angle exactly the same. "+(prev?"Image 2 is the previous frame: keep the character at the same position and scale and the background identical, and change ONLY the pose. ":"Place the character in that background. ")+"Flat 2D donghua anime style, clean lineart, flat cel colors. Pose: "+poses[i];
+const img=await art(pr,refs,1024,576);prev=await shrink("data:image/jpeg;base64,"+img,480);
+const c=document.createElement("figure");c.style.margin=0;const im=new Image();im.src="data:image/jpeg;base64,"+img;im.style.cssText="width:100%;border-radius:8px";const a=document.createElement("a");a.href=im.src;a.download="lunarag-frame-"+(i+1)+".jpg";a.textContent="Frame "+(i+1)+" · Save";a.style.cssText="display:block;margin-top:4px;color:#e8c36a;font-size:13px";c.append(im,a);grid.append(c)}
+msg.textContent="Done: "+poses.length+" connected frames. Save each one, then import them into FlipaClip."}
+catch(e){msg.textContent="Stopped: "+e.message+". Your free daily drawing limit may be used up."}
+t.disabled=false;return}
 if(t.classList.contains("st")){speechSynthesis.cancel();return}
 if(t.classList.contains("sp")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),tk=bd.querySelector(".tk").value.trim();rp.style.display="block";
 if(!("speechSynthesis" in window)){rp.textContent="This browser can't speak. Try Chrome on Android.";return}
@@ -295,6 +313,25 @@ pul.forEach(p=>{const u=(t*.12+p.o)%1;p.m.position.set(p.x*u,.18,p.z*u)});
 works.forEach(w=>{const a=w.g.userData.arms;a[0].rotation.x=-.7+Math.sin(t*10+w.o)*.09;a[1].rotation.x=-.7+Math.cos(t*10+w.o*2)*.09})}
 ren.render(sc3,cam);requestAnimationFrame(tick)}
 requestAnimationFrame(tick);
+
+const REF={char:"",bg:"",cd:"",bd:""};try{Object.assign(REF,JSON.parse(localStorage.getItem("lunarag_refs")||"{}"))}catch(_){}
+const REFUI=`<div class="refs"><b>Step 1 · Lock the look</b> (saved on this phone)
+<textarea class="cd" placeholder="Character description. Example: Akira, 17, long black hair in a high ponytail with a red ribbon, dark green hooded tunic, brown boots, silver bracelet, slim build"></textarea>
+<textarea class="bd2" placeholder="Background description. Example: dense misty bamboo forest at night, moonlight from the upper left, a dirt path through the center"></textarea>
+<div class="rrow"><button class="cp rg" data-k="char">Make character reference</button><label class="up">Upload<input type="file" accept="image/*" hidden data-k="char"></label></div><img class="rimg" data-k="char" alt="Character reference">
+<div class="rrow"><button class="cp rg" data-k="bg">Make background reference</button><label class="up">Upload<input type="file" accept="image/*" hidden data-k="bg"></label></div><img class="rimg" data-k="bg" alt="Background reference">
+<b>Step 2 · Describe the motion below</b> (one line), then tap Draw frames.</div>`;
+function saveRefs(){try{localStorage.setItem("lunarag_refs",JSON.stringify(REF))}catch(_){}
+document.querySelectorAll(".rimg").forEach(i=>{const v=REF[i.dataset.k];i.src=v?"data:image/jpeg;base64,"+v:"";i.style.display=v?"block":"none"});
+document.querySelectorAll(".cd").forEach(x=>{if(!x.value)x.value=REF.cd||""});document.querySelectorAll(".bd2").forEach(x=>{if(!x.value)x.value=REF.bd||""})}
+function shrink(src,max){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.85).split(",")[1])};im.onerror=()=>rej(new Error("Could not read the image"));im.src=src})}
+async function art(task,refs,w,h){const url=$("brain").value.trim().replace("studio-brain","studio-art");if(url.indexOf("studio-art")<0)throw new Error("Paste your studio-brain link at the top of the page first.");
+const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:"storyboard",task,refs,w,h,model:"klein"})});const j=await r.json();if(!j.image)throw new Error(j.error||"no image");return j.image}
+async function planFrames(a,n){try{const r=await fetch($("brain").value.trim(),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:"director",task:"Return ONLY a JSON array of "+n+" short strings and nothing else. Each string describes only the character's body pose in one frame of ONE continuous motion: \""+a+"\". Each pose must differ only slightly from the previous one (small steps in limb and body position, same direction of travel). Do not describe clothing, face or background."})});const j=await r.json();const m=(j.reply||"").match(/\[[\s\S]*\]/);const arr=JSON.parse(m[0]);if(Array.isArray(arr)&&arr.length>=n)return arr.slice(0,n).map(String)}catch(_){}return null}
+document.addEventListener("change",async e=>{const t=e.target;
+if(t.matches("input[type=file][data-k]")&&t.files[0]){try{const u=await new Promise((ok,no)=>{const f=new FileReader();f.onload=()=>ok(f.result);f.onerror=no;f.readAsDataURL(t.files[0])});REF[t.dataset.k]=await shrink(u,480);saveRefs()}catch(_){}t.value="";return}
+if(t.classList.contains("cd")){REF.cd=t.value;saveRefs()}if(t.classList.contains("bd2")){REF.bd=t.value;saveRefs()}});
+new MutationObserver(saveRefs).observe(inn,{childList:true});
 </script>
 </body>
 </html>
