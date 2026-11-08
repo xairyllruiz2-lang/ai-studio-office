@@ -61,6 +61,7 @@ pre{white-space:pre-wrap;background:#0a1124;border-radius:10px;padding:10px;font
 .tk{width:100%;min-height:64px;margin:10px 0 6px;background:#0a1124;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;font:inherit}
 .rp{white-space:pre-wrap;margin-top:8px;background:#0a1124;border-radius:10px;padding:10px;display:none;font-size:14px}
 .ak{background:#d9a441!important;margin-left:8px}
+.dr{background:#7a5cf0!important;margin-left:8px}
 #stage{max-width:1000px;margin:0 auto;height:min(62vh,560px);position:relative}
 #c3{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 .hint{max-width:1000px;margin:4px auto;padding:0 16px;color:var(--mute);font-size:13px}
@@ -109,11 +110,18 @@ let n=0,run=0;ALL.forEach(d=>d.a.forEach(a=>{n++;run+=a[10]}));$("cnt").textCont
 const chipH=ALL.map((d,i)=>`<button style="--c:${d.c}" data-i="${i}">${d.n}</button>`).join("");$("chips").innerHTML=chipH;
 const sh=$("sheet"),inn=$("in");
 function show(i){const d=ALL[i];sh.style.setProperty("--c",d.c);
-inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button><textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button><div class="rp"></div></div></details>`).join("");
+inn.innerHTML=`<div class="hd"><h2>${d.n}</h2><span>${d.a.length} agent${d.a.length>1?"s":""}</span><button id="x" aria-label="Close">✕</button></div>`+(i==2?'<div class="lv"><div><b>Beginner</b>rough line loop</div><div><b>Intermediate</b>flat color shapes</div><div><b>Pro</b>full scene, light and glow</div></div>':"")+d.a.map(a=>`<details style="--c:${d.c}"><summary><span class="av">${a[3]}</span><span><b>${NAMES[a[0]]} · ${a[1]}</b><small>${a[8]}</small></span><span class="st ${a[10]?"":"i"}">${a[10]?"working":"waiting"}</span></summary><div class="bd"><p>${a[4]}</p><p><em>Gets work from:</em> ${a[5]}</p><p><em>Hands work to:</em> ${a[6]}</p><p><em>Free tools:</em> ${TOOLS[a[0]]}</p><pre>${a[7]}</pre><button class="cp" data-p="${a[0]}">Copy prompt</button><textarea class="tk" placeholder="Give ${NAMES[a[0]]} a task, for example: Plan a 2-minute episode about a Tikbalang"></textarea><button class="cp ak" data-p="${a[0]}">Ask ${NAMES[a[0]]}</button>${["04","05","08"].includes(a[0])?`<button class="cp dr" data-p="${a[0]}">Draw</button>`:""}<div class="rp"></div></div></details>`).join("");
 sh.classList.add("open")}
 document.addEventListener("click",async e=>{const t=e.target,rm=t.closest(".room,.hub"),ch=t.closest("[data-i]");
 if(ch){focusDept(+ch.dataset.i);return show(+ch.dataset.i)}
 if(rm){const g=[...mp.querySelectorAll(".room,.hub")];const k=rm.classList.contains("hub")?0:R.findIndex(d=>rm.getAttribute("aria-label").startsWith(d.n+" "))+1;return show(k)}
+if(t.classList.contains("dr")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),tk=bd.querySelector(".tk").value.trim(),url=$("brain").value.trim().replace("studio-brain","studio-art");rp.style.display="block";
+if(url.indexOf("studio-art")<0){rp.textContent="Paste your studio-brain link at the top of the page first.";return}
+if(!tk){rp.textContent="Type what to draw first.";return}
+rp.textContent="Drawing… this can take 10 to 20 seconds.";
+try{const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:KEYS[t.dataset.p],task:tk})});const j=await r.json();if(!j.image){rp.textContent="Error: "+(j.error||"no image");return}
+rp.innerHTML="";const im=new Image();im.src="data:image/jpeg;base64,"+j.image;im.style.cssText="width:100%;border-radius:10px";const a=document.createElement("a");a.href=im.src;a.download="lunarag-"+NAMES[t.dataset.p].toLowerCase()+".jpg";a.textContent="Save image";a.style.cssText="display:inline-block;margin-top:8px;color:#e8c36a";rp.append(im,a)}catch(_){rp.textContent="Could not reach the artist. Check the link and try again."}
+return}
 if(t.classList.contains("ak")){const bd=t.closest(".bd"),rp=bd.querySelector(".rp"),tk=bd.querySelector(".tk").value.trim(),url=$("brain").value.trim();rp.style.display="block";
 if(!url){rp.textContent="Paste your studio-brain link at the top of the page first.";return}
 if(!tk){rp.textContent="Type a task first.";return}
