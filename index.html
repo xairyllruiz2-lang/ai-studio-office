@@ -85,17 +85,49 @@ pre{white-space:pre-wrap;background:#0a1124;border-radius:10px;padding:10px;font
 .cp:disabled{opacity:.45;cursor:default}
 .vm{margin-top:8px}
 .vo video,.vo canvas{width:100%;border-radius:8px;margin-top:8px;background:#000}
+.pw{max-width:1000px;margin:0 auto;padding:0 16px 40px;display:grid;gap:12px}
+.pc{background:#0e1730;border:1px solid var(--line);border-radius:14px;padding:12px;font-size:14px}
+.pc h3{margin:0 0 8px;font-size:16px}
+.pc textarea,.pc input[type=password]{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0a1124;color:var(--ink);font:inherit;margin:4px 0}
+.pc textarea{min-height:70px}
+.pb{all:unset;cursor:pointer;background:#24345c;color:var(--ink);font-weight:700;padding:9px 14px;border-radius:10px;margin:4px 6px 4px 0;display:inline-block}
+.pb.gold{background:#d9a441;color:#1a1405}.pb.ok{background:#2f9e5a;color:#fff}.pb.bad{background:#b84a4a;color:#fff}.pb.warn{background:#c98a2c;color:#1a1405}
+.pb[disabled]{opacity:.45;cursor:default}
+.pl{display:block;margin:6px 0;font-size:13px}
+.pm{font-size:13px;color:var(--mute);margin:4px 0;white-space:pre-wrap}
+.pr{display:flex;flex-wrap:wrap}
+.emp{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.emp small{display:block;color:var(--mute)}
+.sb{padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#33406a}
+.s-working{background:#d9a441;color:#1a1405}.s-submitted{background:#7a5cf0;color:#fff}.s-revision{background:#c98a2c;color:#1a1405}.s-approved{background:#2f9e5a;color:#fff}.s-failed{background:#b84a4a;color:#fff}
+.card{border:1px solid var(--line);border-radius:12px;padding:10px;margin:6px 0;background:#0a1124}
+.out{white-space:pre-wrap;max-height:240px;overflow:auto;background:#060b18;border-radius:8px;padding:8px;font-size:13px}
+.pv img,.pv video,.pv audio{width:100%;max-width:100%;border-radius:8px;margin-top:6px}
+.pv .th{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ck{font-size:13px}.ck b.n{color:#ff9a9a}
+.hv{font-size:13px;padding:4px 0;border-top:1px solid var(--line)}
+.hv time{color:var(--mute)}
+.ni{font-size:13px;padding:6px 0;border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
 <div class="bar"><h1>🌙 LUNARAG Studios<small style="display:block;font-size:12px;font-weight:500;color:#e8c36a">The Legends of the Philippines Awaken.</small></h1>
-<div class="tabs" role="tablist"><button role="tab" aria-selected="true" id="tO">Office</button><button role="tab" aria-selected="false" id="tT">Tasks</button></div>
+<div class="tabs" role="tablist"><button role="tab" aria-selected="true" id="tO">Office</button><button role="tab" aria-selected="false" id="tT">Tasks</button><button role="tab" aria-selected="false" id="tP">Production</button></div>
 <span class="pill" id="cnt"></span></div>
 <div style="max-width:1000px;margin:0 auto;padding:0 16px 8px"><input id="brain" type="url" placeholder="Paste your studio-brain link (https://…workers.dev)" aria-label="Studio brain link"></div>
 <div id="officeV"><div class="zm"><button id="zo" aria-label="Zoom out">−</button><button id="zr" aria-label="Reset zoom">Reset</button><button id="zi" aria-label="Zoom in">+</button></div><div id="stage"><canvas id="c3" role="img" aria-label="3D studio office. Drag to rotate, tap a character to open their panel."></canvas></div>
 <p class="hint">Drag to rotate · pinch or use + / − to zoom · tap a character</p>
 <div class="chips" id="chips"></div></div>
 <div id="tasks"></div>
+<div id="prod" style="display:none"><div class="pw">
+<section class="pc"><h3>Owner access</h3><input id="okey" type="password" autocomplete="off" placeholder="Owner key (the secret you set on studio-flow)"><label class="pl"><input type="checkbox" id="okeep"> Remember on this phone</label><button class="pb" data-a="key">Connect</button><div id="pconn" class="pm">Not connected</div></section>
+<section class="pc"><h3>🔔 Notifications</h3><div class="pr"><button class="pb" data-a="n-on">Enable notifications</button><button class="pb" data-a="n-test">Send test</button><button class="pb" data-a="n-mute" id="nmute">Mute</button><button class="pb" data-a="n-clear">Clear list</button></div><div id="nstat" class="pm"></div><div id="nlist"></div></section>
+<section class="pc"><h3>A · Studio Manager (Mayari)</h3><textarea id="pins" placeholder="Tell Mayari what to produce. Example: A 1-minute episode about a Tikbalang in a misty mountain forest at night."></textarea><button class="pb gold" data-a="send">Send to Mayari</button><div id="pA"></div></section>
+<section class="pc"><h3>B · Approval Center</h3><div id="pB"></div></section>
+<section class="pc"><h3>C · Employee Workflow</h3><label class="pl">Audio file for Himig <input type="file" id="pau" accept="audio/*"></label><div id="pau-s" class="pm"></div><div id="pC"></div><div id="pH" class="bd vb"><div class="vm"></div><input class="vd" type="hidden" value="0.25"><input class="vr" type="hidden" value="3"><input class="vx" type="checkbox" checked hidden><button class="bv" hidden></button><button class="bs" hidden></button><div class="vo"><canvas class="vc" style="display:none"></canvas></div></div></section>
+<section class="pc"><h3>D · Production History</h3><div id="pD"></div></section>
+<section class="pc"><h3>E · Production Controls</h3><div id="pE"></div></section>
+</div></div>
 <div id="sheet" role="dialog" aria-label="Department details"><div class="in" id="in"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -186,10 +218,10 @@ if(t.classList.contains("cp")){const a=ALL.flatMap(d=>d.a).find(a=>a[0]==t.datas
 if(t.classList.contains("go")){t.textContent="Approved ✓";t.style.background="var(--ok)";t.closest(".t").classList.remove("need")}});
 document.addEventListener("keydown",e=>{if((e.key=="Enter"||e.key==" ")&&e.target.matches(".room,.hub")){e.preventDefault();e.target.dispatchEvent(new MouseEvent("click",{bubbles:true}))}});
 $("tasks").innerHTML=ALL.flatMap(d=>d.a.map(a=>`<div class="t ${a[0]=="13"?"need":""}" style="--c:${d.c}"><span class="av" style="--c:${d.c}">${a[3]}</span><div style="flex:1"><b>${a[8]}</b><small>${NAMES[a[0]]} · ${a[1]} · ${d.n}</small><div class="pg"><i style="width:${a[9]}%"></i></div></div>${a[0]=="13"?'<button class="go">Approve</button>':""}</div>`)).join("");
-function tab(o){$("officeV").style.display=o?"":"none";$("tasks").style.display=o?"none":"block";$("tO").setAttribute("aria-selected",o);$("tT").setAttribute("aria-selected",!o);sh.classList.remove("open")}
+function tab(o){$("officeV").style.display=o==1?"":"none";$("tasks").style.display=o==0?"block":"none";$("prod").style.display=o==2?"block":"none";$("tO").setAttribute("aria-selected",o==1);$("tT").setAttribute("aria-selected",o==0);$("tP").setAttribute("aria-selected",o==2);sh.classList.remove("open")}
 try{$("brain").value=localStorage.getItem("brainUrl")||""}catch(_){}
 $("brain").onchange=()=>{try{localStorage.setItem("brainUrl",$("brain").value.trim())}catch(_){}};
-$("tO").onclick=()=>tab(1);$("tT").onclick=()=>tab(0);
+$("tO").onclick=()=>tab(1);$("tT").onclick=()=>tab(0);$("tP").onclick=()=>tab(2);
 const T=THREE,cv=$("c3"),stage=$("stage");
 const ren=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true});ren.setPixelRatio(Math.min(2,devicePixelRatio||1));ren.shadowMap.enabled=true;ren.shadowMap.type=T.PCFSoftShadowMap;
 const sc3=new T.Scene(),cam=new T.PerspectiveCamera(45,1,.1,250);
@@ -354,8 +386,8 @@ function pickMime(){if(typeof MediaRecorder==="undefined")return null;const c=["
 function fmtLabel(m){const k=m.startsWith("video/mp4")?"MP4":"WebM",c=(m.split("codecs=")[1]||"");return k+(c?" ("+c+")":"")}
 /*PURE_END*/
 const FS={db:null,
-open(){if(this.db)return Promise.resolve(this.db);return new Promise((ok,no)=>{if(!window.indexedDB)return no(new Error("This browser has no IndexedDB storage."));let r;try{r=indexedDB.open("lunarag-studio",1)}catch(e){return no(new Error("Browser storage is unavailable (private mode?)."))}
-r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("frames"))d.createObjectStore("frames",{keyPath:"k"});if(!d.objectStoreNames.contains("meta"))d.createObjectStore("meta",{keyPath:"k"})};
+open(){if(this.db)return Promise.resolve(this.db);return new Promise((ok,no)=>{if(!window.indexedDB)return no(new Error("This browser has no IndexedDB storage."));let r;try{r=indexedDB.open("lunarag-studio",2)}catch(e){return no(new Error("Browser storage is unavailable (private mode?)."))}
+r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("frames"))d.createObjectStore("frames",{keyPath:"k"});if(!d.objectStoreNames.contains("meta"))d.createObjectStore("meta",{keyPath:"k"});if(!d.objectStoreNames.contains("audio"))d.createObjectStore("audio",{keyPath:"k"})};
 r.onsuccess=()=>{this.db=r.result;this.db.onversionchange=()=>{this.db.close();this.db=null};ok(this.db)};
 r.onerror=()=>no(new Error("Could not open browser storage"+(r.error?" ("+r.error.name+")":"")+"."));
 r.onblocked=()=>no(new Error("Browser storage is blocked by another LUNARAG tab. Close it and try again."))})},
@@ -427,6 +459,93 @@ say((stopped?"Stopped early. Partial video kept: ":"Done: ")+fr.length+" frames,
 finally{cancelAnimationFrame(raf);document.removeEventListener("visibilitychange",onVis);VB.stop=null;VB.busy=false;bvb.disabled=false;bsb.disabled=true;
 try{if(stream)stream.getTracks().forEach(x=>x.stop())}catch(_){}try{if(wl)wl.release()}catch(_){}imgs.forEach(im=>{try{im.close()}catch(_){}})}}
 new MutationObserver(()=>{if(inn.querySelector(".vs"))refreshVS()}).observe(inn,{childList:true});
+
+/* ===== Production: Mayari workflow, owner approval, notifications ===== */
+FS.putAudio=function(f){return this.tx(["audio"],"readwrite",t=>{t.objectStore("audio").put({k:"current",blob:f,name:f.name,at:Date.now()})})};
+FS.getAudio=function(){return this.tx(["audio"],"readonly",t=>{const r=t.objectStore("audio").get("current");return{get result(){return r.result||null}}})};
+const EMP={};ALL.forEach(d=>d.a.forEach(a=>{EMP[+a[0]]={who:NAMES[a[0]],role:a[1],e:a[3]}}));
+const KIND={7:"frames",9:"audio",10:"video"},ST={waiting:"Waiting",working:"Working",submitted:"Submitted",revision:"Revision Required",approved:"Approved",failed:"Failed"};
+const FL={s:null,busy:null,sig:"",urls:[],mute:false,items:[],seen:{}};
+try{FL.mute=localStorage.getItem("lunMute")==="1";FL.seen=JSON.parse(localStorage.getItem("lunSeen")||"{}")}catch(_){}
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const okey=()=>{try{return sessionStorage.getItem("okey")||localStorage.getItem("okey")||""}catch(_){return""}};
+const furl=()=>$("brain").value.trim().replace("studio-brain","studio-flow");
+async function fapi(path,body){const u=furl();if(u.indexOf("studio-flow")<0)throw new Error("Paste your studio-brain link at the top of the page first.");const k=okey();if(!k)throw new Error("Enter your owner key and tap Connect.");
+let r;try{r=await fetch(u+path,{method:body?"POST":"GET",headers:{"Content-Type":"application/json","X-Owner-Key":k},body:body?JSON.stringify({...body,requestId:crypto.randomUUID()}):undefined})}catch(_){throw new Error("Could not reach studio-flow. Check the link and that it is deployed.")}
+const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Server error "+r.status);if(j.project!==undefined)FL.s=j;return j}
+/* notifications */
+function nstat(){const el=$("nstat");if(!el)return;el.textContent=!("Notification"in window)?"This browser has no notifications. You still get the list below and the Production tab marker.":"Permission: "+Notification.permission+(FL.mute?" · muted":"")+". Alerts show while this page is open or in the background; they cannot wake a closed browser.";$("nmute").textContent=FL.mute?"Unmute":"Mute"}
+async function notify(title,body){FL.items.unshift({t:Date.now(),title,body});FL.items=FL.items.slice(0,20);rNl();if(FL.mute)return;try{if(navigator.vibrate)navigator.vibrate([120,60,120])}catch(_){}
+if(!("Notification"in window)||Notification.permission!=="granted")return;try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg)await reg.showNotification(title,{body,tag:"lunarag",renotify:true,vibrate:[120,60,120],actions:[{action:"review",title:"Review"},{action:"later",title:"Later"}]});else new Notification(title,{body})}catch(_){}}
+function rNl(){const el=$("nlist");if(el)el.innerHTML=FL.items.map(i=>'<div class="ni"><b>'+esc(i.title)+'</b> · '+new Date(i.t).toLocaleTimeString()+'<br>'+esc(i.body)+'</div>').join("")}
+function diff(p){if(!p)return;let seen=FL.seen[p.id];if(seen===undefined)seen=(Date.now()-p.createdAt<120000)?0:p.seq;
+for(const h of p.history){if(h.n<=seen)continue;if(h.type==="plan_ready")notify("Plan ready for approval","Mayari prepared a production plan. Open Production > Approval Center.");else if(h.type==="submitted")notify("Work needs your approval",h.detail);else if(h.type==="failed"||h.type==="needs_input")notify(h.type==="failed"?"An employee failed":"An employee needs your input",h.detail);else if(h.type==="completed")notify("Final report ready","Mayari delivered the final project report.")}
+FL.seen[p.id]=p.seq;try{localStorage.setItem("lunSeen",JSON.stringify(FL.seen))}catch(_){}}
+/* render */
+const tk=(p,id)=>p.tasks.find(t=>t.id===id);
+const badge=s=>'<span class="sb s-'+s+'">'+(ST[s]||s)+'</span>';
+function pending(p){return p&&(p.status==="plan_pending"||p.tasks.some(t=>t.status==="submitted"))}
+async function previews(t,el){FL.urls.forEach(u=>URL.revokeObjectURL(u));FL.urls=[];if(!el)return;const k=KIND[t.empId];let h="";
+try{if(k==="frames"){const d=await FS.all();h='<div class="th">'+d.frames.map(f=>{const u=URL.createObjectURL(f.blob);FL.urls.push(u);return'<img alt="Frame '+f.k+'" src="'+u+'">'}).join("")+'</div>'+(d.frames.length?"":"No frames found in this browser.")}
+else if(k==="video"){h=VB.url?'<video controls playsinline src="'+VB.url+'"></video>':"The video was built in an earlier session, so it can't be previewed here."}
+else if(k==="audio"){const a=await FS.getAudio();if(a){const u=URL.createObjectURL(a.blob);FL.urls.push(u);h='<audio controls src="'+u+'"></audio>'}else h="No audio file found in this browser."}}catch(e){h="Preview unavailable: "+esc(e.message)}el.innerHTML=h}
+function renderProd(force){const p=FL.s&&FL.s.project,sig=JSON.stringify(p?[p.status,p.paused,p.seq,p.tasks.map(t=>t.status+t.attempt)]:0)+FL.busy;if(!force&&sig===FL.sig)return;FL.sig=sig;
+const note=($("pnote")||{}).value||"";const pend=pending(p);$("tP").textContent="Production"+(pend?" ●":"");document.title=(pend?"(!) ":"")+"LUNARAG Studios";
+$("pconn").textContent=p?"Connected · project "+p.status+(p.paused?" (paused)":""):"Connected · no project yet";
+if(!p){["pA","pB","pC","pD","pE"].forEach(i=>$(i).innerHTML="<div class='pm'>No project yet. Send your instructions to Mayari above.</div>");return}
+const cur=p.tasks.find(t=>["working","revision","submitted"].includes(t.status));
+$("pA").innerHTML='<div class="card"><b>Project</b><br>'+esc(p.instruction)+'</div><div class="card"><b>Mayari\'s plan'+(p.plan?" v"+p.plan.version:"")+'</b><br>'+esc(p.plan?p.plan.summary:"Mayari is planning…")+'<br>'+p.tasks.map(t=>'<div class="hv">'+t.order+'. <b>'+esc(EMP[t.empId].who)+'</b> ('+esc(EMP[t.empId].role)+') '+badge(t.status)+'<br>'+esc(t.instruction)+'<br><small>Needs first: '+((p.plan.tasks.find(x=>x.empId===t.empId)||{dependsOn:[]}).dependsOn.map(d=>EMP[d].who).join(", ")||"nothing")+'</small></div>').join("")+'</div><div class="card"><b>Current employee:</b> '+(cur?esc(EMP[cur.empId].who)+" · "+(ST[cur.status])+"<br><b>Current task:</b> "+esc(cur.instruction):"none")+'</div>'+
+(p.tasks.filter(t=>t.report).map(t=>'<div class="card ck"><b>Mayari report · '+esc(EMP[t.empId].who)+'</b><br>'+esc(t.report.summary)+'</div>').join(""))+(p.final?'<div class="card"><b>Final report</b><br>'+esc(p.final.summary)+'<br><small>'+p.final.lines.map(esc).join("<br>")+'</small>'+p.final.notices.map(n=>'<br><b>'+esc(n)+'</b>').join("")+'</div>':"");
+let B="";
+if(p.status==="planning")B="<div class='pm'>Mayari is preparing the plan…</div>";
+else if(p.status==="plan_pending")B='<div class="card"><b>Mayari\'s plan v'+p.plan.version+' is waiting for your decision.</b><br>Review it in section A. No employee works until you approve.<textarea id="pnote" placeholder="Note for a new plan (optional)"></textarea><button class="pb ok" data-a="plan-ok" data-id="'+p.planId+'">Approve plan</button><button class="pb warn" data-a="plan-new" data-id="'+p.planId+'">Ask for a new plan</button></div>';
+const sub=p.tasks.find(t=>t.status==="submitted");
+if(sub){const R=EMP[sub.empId];B+='<div class="card"><b>'+esc(R.who)+' · '+esc(R.role)+'</b> '+badge("submitted")+' (attempt '+sub.attempt+')<br><b>Task:</b> '+esc(sub.instruction)+'<div class="pm">Mayari\'s report: '+esc(sub.report.summary)+'</div><div class="ck">'+sub.report.checks.map(c=>(c.ok?"✔ ":"<b class='n'>✖ </b>")+esc(c.name)+" · "+esc(c.detail)).join("<br>")+'</div><div class="out">'+esc(sub.output.text)+'</div><div class="pv" id="pv"></div><div class="pm">Frames, audio and video files are checked by you here. The server only receives the browser\'s report about them.</div><textarea id="pnote" placeholder="Correction instructions (required for Revision or Reject)"></textarea><button class="pb ok" data-a="approve" data-id="'+sub.id+'" data-dec="'+sub.decisionId+'">Approve</button><button class="pb warn" data-a="revise" data-id="'+sub.id+'" data-dec="'+sub.decisionId+'">Request Revision</button><button class="pb bad" data-a="reject" data-id="'+sub.id+'" data-dec="'+sub.decisionId+'">Reject</button></div>';setTimeout(()=>previews(sub,$("pv")),0)}
+const fl=p.tasks.filter(t=>t.status==="failed");fl.forEach(t=>{B+='<div class="card"><b>'+esc(EMP[t.empId].who)+'</b> '+badge("failed")+'<br>'+esc(t.error&&t.error.message)+'<br><button class="pb gold" data-a="retry" data-id="'+t.id+'">Retry</button></div>'});
+if(!B)B="<div class='pm'>"+(p.status==="completed"?"Production finished.":p.status==="cancelled"?"Production cancelled.":"Nothing is waiting for your approval.")+"</div>";$("pB").innerHTML=B;if($("pnote"))$("pnote").value=note;
+$("pC").innerHTML='<div class="emp"><span>🧠</span><span><b>Mayari</b> · Studio Manager<small>plans, inspects, reports</small></span>'+badge(p.status==="planning"||p.status==="finalizing"?"working":p.status==="plan_pending"?"submitted":p.status==="cancelled"?"failed":p.status==="completed"?"approved":"approved")+'</div>'+p.tasks.map(t=>'<div class="emp"><span>'+EMP[t.empId].e+'</span><span><b>'+esc(EMP[t.empId].who)+'</b> · '+esc(EMP[t.empId].role)+'<small>'+esc(t.instruction)+(t.error?"<br>⚠ "+esc(t.error.message):"")+'</small></span>'+badge(t.status)+'</div>').join("");
+$("pD").innerHTML='<button class="pb" data-a="hist">Download history (JSON)</button>'+p.history.slice().reverse().slice(0,80).map(h=>'<div class="hv"><time>'+new Date(h.ts).toLocaleTimeString()+'</time> '+esc(h.detail)+'</div>').join("")+'<div class="pm">Approval records: '+p.approvals.length+'</div>'+p.approvals.slice().reverse().map(a=>'<div class="hv">'+new Date(a.at).toLocaleTimeString()+' · '+(a.type==="plan"?"plan v"+a.version:esc(EMP[a.empId].who))+' · <b>'+a.decision+'</b>'+(a.note?" · "+esc(a.note):"")+'</div>').join("")+p.tasks.filter(t=>t.output).map(t=>'<details><summary>'+esc(EMP[t.empId].who)+' output ('+ST[t.status]+', '+t.revisions.length+' revisions)</summary><div class="out">'+esc(t.output.text)+'</div></details>').join("");
+const run=p.status==="running";$("pE").innerHTML='<button class="pb" data-a="pause" '+(run&&!p.paused?"":"disabled")+'>Pause</button><button class="pb" data-a="resume" '+(p.paused?"":"disabled")+'>Resume</button><button class="pb bad" data-a="cancel" '+(["completed","cancelled"].includes(p.status)?"disabled":"")+'>Cancel production</button><div class="pm">'+(FL.msg?esc(FL.msg):"")+'</div>'}
+/* execution (one employee at a time, started only after Mayari dispatches) */
+const frPrompt=(prev,pose)=>"Image 0 is the approved character reference: keep the face, hairstyle, outfit, accessories, colors and body proportions exactly the same. Image 1 is the approved background: keep the same environment, trees, lighting, atmosphere and camera angle exactly the same. "+(prev?"Image 2 is the previous frame: keep the character at the same position and scale and the background identical, and change ONLY the pose. ":"Place the character in that background. ")+"Flat 2D donghua anime style, clean lineart, flat cel colors. Pose: "+pose;
+async function exec(t){const k=KIND[t.empId],b={taskId:t.id,dispatchId:t.dispatchId},fail=m=>fapi("/api/fail",{...b,message:m,clarify:true}).catch(()=>{});
+if(!k){await fapi("/api/run",b);return}
+if(k==="audio"){const a=await FS.getAudio().catch(()=>null);if(!a)return fail("Needs your input: choose an audio file for Himig in section C, then tap Retry.");await fapi("/api/run",{...b,artifacts:[{kind:"audio",name:a.name,size:a.blob.size}]});return}
+await fapi("/api/claim",b);
+if(k==="frames"){if(!REF.char||!REF.bg)return fail("Needs your input: make or upload the character AND background reference in Bagani's panel (Office tab), then tap Retry.");
+let poses=null;try{poses=await planFrames((t.instruction+" "+(t.input||"")).slice(0,600),6)}catch(_){}if(!poses)poses=Array.from({length:6},(_,i)=>t.instruction+" (small step "+(i+1)+" of 6 of one continuous motion)");
+try{await FS.reset(6,"Bagani");let prev=null;for(let i=0;i<6;i++){FL.msg="Bagani is drawing frame "+(i+1)+" of 6…";renderProd(1);const refs=[REF.char,REF.bg];if(prev)refs.push(prev);const img=await art(frPrompt(prev,poses[i]),refs,1024,576);await FS.put(i+1,img);prev=await shrink("data:image/jpeg;base64,"+img,480)}}
+catch(e){FL.msg="";return fail("Frame generation stopped: "+e.message+". Your free daily drawing limit may be used up.")}
+FL.msg="";const d=await FS.all();await fapi("/api/submit",{...b,text:"Generated and saved "+d.frames.length+" connected frames in this browser (IndexedDB).",artifacts:[{kind:"frames",count:d.frames.length,name:"IndexedDB lunarag-studio"}]});return}
+if(k==="video"){const d=await FS.all().catch(()=>({frames:[]}));if(d.frames.length<2)return fail("Needs your input: fewer than 2 saved frames. Bagani must finish first, or this browser's storage was cleared.");
+const bd=$("pH");await buildVideo(bd);const v=bd.querySelector(".vo video");if(!v)return fail("Video build failed: "+bd.querySelector(".vm").textContent);
+const blob=await (await fetch(VB.url)).blob();if(!blob.size)return fail("The video file is empty.");
+await fapi("/api/submit",{...b,text:"Built a video from "+d.frames.length+" saved frames. "+bd.querySelector(".vm").textContent,artifacts:[{kind:"video",name:"lunarag-frames-video."+(blob.type.includes("mp4")?"mp4":"webm"),size:blob.size}]})}}
+async function drive(){const p=FL.s&&FL.s.project;if(!p||FL.busy)return;
+if(p.status==="finalizing"){FL.busy="final";try{await fapi("/api/final",{})}catch(e){FL.msg=e.message}FL.busy=null;return renderProd(1)}
+if(p.status!=="running"||p.paused)return;const t=p.tasks.find(x=>x.status==="working"||x.status==="revision");if(!t||t.lease>(FL.s.serverTime||Date.now()))return;
+FL.busy=t.id;try{await exec(t)}catch(e){FL.msg=EMP[t.empId].who+": "+e.message;await fapi("/api/fail",{taskId:t.id,dispatchId:t.dispatchId,message:e.message,clarify:false}).catch(()=>{})}FL.busy=null;poll()}
+async function poll(){if(!okey()||furl().indexOf("studio-flow")<0)return;try{await fapi("/api/state");diff(FL.s.project);renderProd();drive()}catch(e){const c=$("pconn");if(c)c.textContent="⚠ "+e.message}}
+/* buttons */
+$("prod").addEventListener("click",async e=>{const b=e.target.closest("[data-a]");if(!b||b.disabled)return;const a=b.dataset.a,note=(($("pnote")||{}).value||"").trim();
+const go=async f=>{b.disabled=true;try{await f();FL.msg=""}catch(x){FL.msg=x.message;alert(x.message)}b.disabled=false;renderProd(1);poll()};
+if(a==="key"){const k=$("okey").value.trim();if(k.length<8)return alert("The owner key must be at least 8 characters.");try{sessionStorage.setItem("okey",k);if($("okeep").checked)localStorage.setItem("okey",k);else localStorage.removeItem("okey")}catch(_){}$("okey").value="";return poll()}
+if(a==="send")return go(async()=>{const v=$("pins").value.trim();if(v.length<10)throw new Error("Write at least a sentence for Mayari.");$("pins").value="";await fapi("/api/project",{instruction:v})});
+if(a==="plan-ok")return go(()=>fapi("/api/plan",{decision:"approve",planId:b.dataset.id}));
+if(a==="plan-new")return go(()=>fapi("/api/plan",{decision:"replan",planId:b.dataset.id,note}));
+if(a==="approve"||a==="revise"||a==="reject")return go(async()=>{if(a!=="approve"&&note.length<3)throw new Error("Write the correction instructions or the reason first.");await fapi("/api/decide",{taskId:b.dataset.id,decisionId:b.dataset.dec,decision:a,note})});
+if(a==="retry")return go(()=>fapi("/api/retry",{taskId:b.dataset.id}));
+if(a==="pause"||a==="resume")return go(()=>fapi("/api/control",{action:a}));
+if(a==="cancel"){if(!confirm("Cancel this production? Work already approved stays in the history."))return;return go(()=>fapi("/api/control",{action:"cancel"}))}
+if(a==="hist"){const p=FL.s&&FL.s.project;if(!p)return;const u=URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:"application/json"})),l=document.createElement("a");l.href=u;l.download="lunarag-production-"+p.id+".json";l.click();setTimeout(()=>URL.revokeObjectURL(u),2000);return}
+if(a==="n-on"){if(!("Notification"in window))return nstat();await Notification.requestPermission();return nstat()}
+if(a==="n-test")return notify("LUNARAG test","If you can read this, notifications work on this phone.");
+if(a==="n-mute"){FL.mute=!FL.mute;try{localStorage.setItem("lunMute",FL.mute?"1":"0")}catch(_){}return nstat()}
+if(a==="n-clear"){FL.items=[];rNl()}});
+$("pau").addEventListener("change",async e=>{const f=e.target.files[0],s=$("pau-s");if(!f)return;if(f.size>15e6){s.textContent="That file is over 15 MB. Choose a shorter one.";return}try{await FS.putAudio(f);s.textContent="Attached for Himig: "+f.name+" ("+Math.round(f.size/1024)+" KB)"}catch(x){s.textContent="Could not save the audio: "+x.message}});
+FS.getAudio().then(a=>{if(a)$("pau-s").textContent="Attached for Himig: "+a.name+" ("+Math.round(a.blob.size/1024)+" KB)"}).catch(()=>{});
+try{if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(_){}
+nstat();setInterval(poll,4000);setTimeout(poll,800);
 </script>
 </body>
 </html>
